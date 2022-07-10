@@ -9,4 +9,9 @@ public interface AccountController {
     List<Account> getAllAccount();
     Account getAccountById(Long id);
     Account createAccount(AccountDTO accountDTO);
+    double getAvgEmployeeCount();
+    double getMedEmployeeCount();
+    int getMaxEmployeeCount();
+    int getMinEmployeeCount();
+
 }

@@ -33,6 +33,30 @@ public class AccountControllerImpl implements AccountController {
         return accountService.getAccountById(id);
     }
 
+    @GetMapping("/employee-count/avg")
+    @ResponseStatus(HttpStatus.OK)
+    public double getAvgEmployeeCount() {
+        return accountRepository.AvgEmployeeCount();
+    }
+
+    @GetMapping("/employee-count/med")
+    @ResponseStatus(HttpStatus.OK)
+    public double getMedEmployeeCount() {
+        return  accountService.getMedEmployeeCount();
+    }
+
+    @GetMapping("/employee-count/max")
+    @ResponseStatus(HttpStatus.OK)
+    public int getMaxEmployeeCount() {
+        return accountRepository.MaxEmployeeCount();
+    }
+
+    @GetMapping("/employee-count/min")
+    @ResponseStatus(HttpStatus.OK)
+    public int getMinEmployeeCount() {
+        return accountRepository.MinEmployeeCount();
+    }
+
     @PostMapping("/accounts")
     @ResponseStatus(HttpStatus.CREATED)
     public Account createAccount(@RequestBody @Valid AccountDTO accountDTO) {

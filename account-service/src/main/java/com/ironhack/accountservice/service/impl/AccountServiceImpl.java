@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @Service
 public class AccountServiceImpl implements AccountService {
     @Autowired
@@ -18,6 +20,19 @@ public class AccountServiceImpl implements AccountService {
         Account account = accountRepository.findById(id).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Account with id " + id + "not found"));
         return account;
+    }
+
+    public double getMedEmployeeCount() {
+        List<Integer> medianList = accountRepository.MedEmployeeCount_firstStep();
+        int size = medianList.size();
+        int medIndex = size/2;
+        double median = medianList.get(medIndex);
+        if (size%2 == 0){
+            double median1 = medianList.get(medIndex-1);
+            double median2 = medianList.get(medIndex);
+            median = (median1+median2)/2;
+        }
+        return median;
     }
 
     public Account createAccount(String industryString, int employeeCount, String city, String country) {
