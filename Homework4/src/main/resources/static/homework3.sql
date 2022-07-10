@@ -4,7 +4,7 @@ USE homework3;
 
 DROP SCHEMA IF EXISTS homework3_test;
 CREATE SCHEMA homework3_test;
-USE homework3_test;
+-- USE homework3_test;
 
 DROP TABLE IF EXISTS opportunity;
 DROP TABLE IF EXISTS contact;
