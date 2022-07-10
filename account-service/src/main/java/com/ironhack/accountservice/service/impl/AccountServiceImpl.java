@@ -18,7 +18,7 @@ public class AccountServiceImpl implements AccountService {
 
     public Account getAccountById(Long id) {
         Account account = accountRepository.findById(id).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Account with id " + id + "not found"));
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Account with id " + id + " not found"));
         return account;
     }
 
