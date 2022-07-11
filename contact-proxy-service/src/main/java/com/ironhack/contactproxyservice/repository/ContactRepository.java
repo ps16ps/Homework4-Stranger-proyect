@@ -12,5 +12,5 @@ import java.util.Optional;
 public interface ContactRepository extends JpaRepository<Contact, Long> {
     List<Contact> findAll();
     Optional<Contact> findById(Long id);
-    Contact saveContact(Contact contact);
+//    Contact saveContact(Contact contact);
 }

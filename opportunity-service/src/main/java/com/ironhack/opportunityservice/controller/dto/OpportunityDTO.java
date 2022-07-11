@@ -1,10 +1,11 @@
 package com.ironhack.opportunityservice.controller.dto;
 
 
+import javax.validation.constraints.Min;
+
 public class OpportunityDTO {
-
-
     private String product;
+    @Min(value = 1,message = "The quantity of trucks has to be higher than 0")
     private int quantity;
 
     private String status;

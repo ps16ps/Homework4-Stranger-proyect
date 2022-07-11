@@ -15,11 +15,11 @@ import java.util.Optional;
 public class ContactControllerImpl implements ContactController {
 
     @Autowired
-    ContactRepository contactRepository;
+    private ContactRepository contactRepository;
     @Autowired
-    ContactService contactService;
+    private ContactService contactService;
 
-    @GetMapping("/employees")
+    @GetMapping("/contacts")
     @ResponseStatus(HttpStatus.OK)
     public List<Contact> findAll() {
         List<Contact> contactList = contactRepository.findAll();
@@ -29,14 +29,13 @@ public class ContactControllerImpl implements ContactController {
     @GetMapping("/contacts/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Contact findById(@PathVariable Long id) {
-        Optional<Contact> contact = contactRepository.findById(id);
-        return contact.get();
+        return contactService.findById(id);
     }
 
     @PostMapping("/contacts")
     @ResponseStatus (HttpStatus.CREATED)
     public Contact saveContact (@RequestBody Contact contact) {
-        return contactRepository.save (contact);
+        return contactRepository.save(contact);
     }
 }
 

@@ -1,6 +1,7 @@
 package com.ironhack.LeadService.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.util.Objects;
 
 @Entity
@@ -9,6 +10,7 @@ public class Lead {
     @Id  // indicate that id is the primary column
     @GeneratedValue(strategy = GenerationType.IDENTITY) // indicate that is auto increment column
     private long id; //long with l minus indicate that is not null column
+    @Pattern(regexp = "^[A-Za-z ]*$", message = "The name can not contain numbers")
     private String name;
     private String phoneNumber;
     private String email;
@@ -16,31 +18,16 @@ public class Lead {
     @JoinColumn(name="sales_rep")
     private Long salesRepId;
 
-//    @ManyToOne
-////    @JsonIgnore
-//    @JoinColumn(name = "sales_rep")
-//    private SalesRep salesRep;
-
-//    protected static int leadIdCounter = 1;
-//    constructors: void and with all the variables
-
     public Lead() {
     }
 
-    public Lead(String name, String phoneNumber, String email, String companyName,Long salesRepId) {
+    public Lead(String name, String phoneNumber, String email, String companyName, Long salesRepId) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.companyName = companyName;
         this.salesRepId = salesRepId;
     }
-
-//    public Lead(String name, String phoneNumber, String email, String companyName) {
-//        this.name = name;
-//        this.phoneNumber = phoneNumber;
-//        this.email = email;
-//        this.companyName = companyName;
-//    }
 
     //getters and setters needed
     public long getId() {
@@ -91,6 +78,10 @@ public class Lead {
         this.salesRepId = salesRepId;
     }
 
+    public Long getSalesRepId() {
+        return salesRepId;
+    }
+
     //Strings to Print
     public String showLead(){
         return ("id: " + id + " -> name: " + name);
@@ -111,7 +102,8 @@ public class Lead {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Lead lead = (Lead) o;
-        return name.equals(lead.name) && phoneNumber.equals(lead.phoneNumber) && email.equals(lead.email) && Objects.equals(companyName, lead.companyName);
+        return name.equals(lead.name) && phoneNumber.equals(lead.phoneNumber) && email.equals(lead.email) &&
+                Objects.equals(companyName, lead.companyName);
     }
 
     @Override

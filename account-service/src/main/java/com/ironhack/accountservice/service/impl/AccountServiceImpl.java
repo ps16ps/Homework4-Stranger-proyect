@@ -44,15 +44,6 @@ public class AccountServiceImpl implements AccountService {
                     "ones: PRODUCE, ECOMMERCE, MANUFACTURING, MEDICAL, OTHER");
         }
         Account account = new Account(industryEnum,employeeCount,city,country);
-
-        //CHECK: Se pueden tener dos cuentas distintas con los mismos datos???
-
-//        List<Account> accounts = accountRepository.findAll();
-//        for (Account account1:accounts){
-//            if (account1.equals(account)){
-//                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This account already exists");
-//            }
-//        }
         return accountRepository.save(account);
     }
 }

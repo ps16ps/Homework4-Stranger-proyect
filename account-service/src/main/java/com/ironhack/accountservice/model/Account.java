@@ -17,13 +17,8 @@ public class Account{
     private int employeeCount;
     private String city;
     private String country;
-//    @OneToMany(mappedBy = "accountC")
-//    private List<Contact> contactList;
-//    @OneToMany(mappedBy = "accountO",fetch = FetchType.EAGER)
-//    private List<Opportunity> opportunityList;
 
     //Constructor
-
     public Account() {
     }
 
@@ -76,48 +71,6 @@ public class Account{
         this.country = country;
     }
 
-
-    //Add contacts and opportunities to the list
-//    public void addContact(Contact contact){
-//        this.contactList.add(contact);
-//    }
-//
-//    public void addOpportunity(Opportunity opportunity){
-//        this.opportunityList.add(opportunity);
-//    }
-//
-//    //Strings to Print
-//    public String showAccount() {
-//        return ("id: " + id + " -> id of first opportunity: " + opportunityList.get(0).getId());
-//    }
-//
-//    @Override
-//    public String toString() {
-//        return "=== Account " + id + " ===\n"+
-//                "- industry: " + industry +"\n"+
-//                "- employee count: " + employeeCount + "\n"+
-//                "- city: " + city + "\n"+
-//                "- country: " + country + "\n"+
-//                "- id's of the contacts: \n" + printIdsContactList(opportunityList) +
-//                "- id's of the opportunities: \n" + printIdsOpportunityList(opportunityList);
-//    }
-//
-//    public String printIdsContactList(List<Opportunity> opportunityList){
-//        String idsList = "";
-//        for (Opportunity opportunity : opportunityList){
-//            idsList += Long.toString(opportunity.getDecisionMaker().getId()) + "\n";
-//        }
-//        return idsList;
-//    }
-//
-//    public String printIdsOpportunityList(List<Opportunity> opportunityList){
-//        String idsList = "";
-//        for (Opportunity opportunity : opportunityList){
-//            idsList += Long.toString(opportunity.getId()) + "\n";
-//        }
-//        return idsList;
-//    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -125,12 +78,10 @@ public class Account{
         Account account = (Account) o;
         return employeeCount == account.employeeCount && industry == account.industry && city.equals(account.city) &&
                 country.equals(account.country);
-                //&& contactList.equals(account.contactList) && opportunityList.equals(account.opportunityList);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(industry, employeeCount, city, country);
-                //, contactList, opportunityList);
     }
 }

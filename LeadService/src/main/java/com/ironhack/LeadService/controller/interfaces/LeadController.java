@@ -7,4 +7,5 @@ import java.util.List;
 public interface LeadController {
     List<Lead> getAllLead();
     Lead getLeadById(Long id);
+    Lead postLead(Lead lead);
 }
