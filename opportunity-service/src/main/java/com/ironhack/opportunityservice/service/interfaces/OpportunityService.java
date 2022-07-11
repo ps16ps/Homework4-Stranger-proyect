@@ -10,6 +10,7 @@ public interface OpportunityService {
     Opportunity getOpportunityById(Long id);
 
     double getMedQuantity();
+
     Opportunity createOpportunity(String product ,int quantity, Long decisionMakerId,
                                   String status, Long accountId, Long salesRepId );
 

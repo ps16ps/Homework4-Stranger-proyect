@@ -18,7 +18,7 @@ import java.util.List;
 public class OpportunityServiceImpl implements OpportunityService {
 
     @Autowired
-    OpportunityRepository opportunityRepository;
+    private OpportunityRepository opportunityRepository;
 
 
     public Opportunity getOpportunityById(Long id) {
@@ -41,8 +41,6 @@ public class OpportunityServiceImpl implements OpportunityService {
         }
         return median;
     }
-
-
 
     public Opportunity createOpportunity(String product ,int quantity, Long decisionMakerId,
                                          String status, Long accountId, Long salesRepId ) {
@@ -74,7 +72,6 @@ public class OpportunityServiceImpl implements OpportunityService {
     public void updateStatus(Long id, String status) {
         Opportunity opportunity = opportunityRepository.findById(id)
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"Id " +  id + " not found."));
-
         Status newStatus;
         try {
             newStatus = Status.valueOf(status.toUpperCase());

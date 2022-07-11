@@ -6,6 +6,7 @@ import com.ironhack.opportunityservice.controller.dto.StatusDTO;
 import com.ironhack.opportunityservice.model.Opportunity;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface OpportunityController {
 
@@ -20,6 +21,18 @@ public interface OpportunityController {
     int getMinQuantity();
 
     double getMedQuantity();
+
+    //Get by Status and Product
+    List<Object[]> getAllOpportunitiesByProduct();
+
+    List<Object[]> getOpportunitiesClosedWonByProduct();
+
+    List<Object[]> getOpportunitiesClosedLostByProduct();
+
+    List <Object[]> getOpportunitiesOpenByProduct();
+
+
+
 
     Opportunity createOpportunity(OpportunityDTO opportunityDto);
 

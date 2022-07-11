@@ -3,24 +3,28 @@ package com.ironhack.opportunityservice.controller.impl;
 import com.ironhack.opportunityservice.controller.dto.OpportunityDTO;
 import com.ironhack.opportunityservice.controller.dto.StatusDTO;
 import com.ironhack.opportunityservice.controller.interfaces.OpportunityController;
+import com.ironhack.opportunityservice.enums.Product;
 import com.ironhack.opportunityservice.model.Opportunity;
 import com.ironhack.opportunityservice.repository.OpportunityRepository;
 import com.ironhack.opportunityservice.service.interfaces.OpportunityService;
+import com.ironhack.opportunityservice.enums.Status;
 import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.ws.rs.Path;
+
 import java.util.List;
+import java.util.Optional;
+
 @RestController
 public class OpportunityControllerImpl implements OpportunityController {
 
 
     @Autowired
-    OpportunityService opportunityService;
+    private OpportunityService opportunityService;
     @Autowired
-    OpportunityRepository opportunityRepository;
+    private OpportunityRepository opportunityRepository;
 
     @GetMapping("/opportunities")
     @ResponseStatus(HttpStatus.OK)
@@ -57,7 +61,32 @@ public class OpportunityControllerImpl implements OpportunityController {
     @ResponseStatus(HttpStatus.OK)
     public double getMedQuantity(){
       return opportunityService.getMedQuantity();
+    }
+
+    @GetMapping("/opportunity-products")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Object[]> getAllOpportunitiesByProduct(){
+        return opportunityRepository.findOpportunitiesByProduct();
+    }
+
+    @GetMapping("/opportunity-products/closed-won")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Object[]> getOpportunitiesClosedWonByProduct(){
+        return opportunityRepository.findOpportunitiesClosedWonByProduct();
+    }
+
+    @GetMapping("/opportunity-products/closed-lost")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Object[]> getOpportunitiesClosedLostByProduct(){
+        return opportunityRepository.findOpportunitiesClosedLostByProduct();
+    }
+
+    @GetMapping("/opportunity-products/open")
+    @ResponseStatus(HttpStatus.OK)
+    public List <Object[]> getOpportunitiesOpenByProduct(){
+        return opportunityRepository.findOpportunitiesOpenByProduct();
     };
+
 
     @PostMapping("/opportunities")
     @ResponseStatus(HttpStatus.CREATED)
@@ -76,6 +105,7 @@ public class OpportunityControllerImpl implements OpportunityController {
     @PatchMapping("/opportunities/{id}/update-status")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateStatus(@PathVariable Long id, @RequestBody StatusDTO statusDTO){
+        opportunityService.updateStatus(id, statusDTO.getStatus());
     }
 
 }

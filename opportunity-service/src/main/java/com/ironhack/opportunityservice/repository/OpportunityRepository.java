@@ -27,6 +27,24 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
     List<Integer> MedQuantity_firstStep();
 
 
+    //By Product
+    //Count of all Opportunities by the product
+    @Query("SELECT o.product, COUNT(o.id) FROM Opportunity o GROUP BY o.product")
+          List<Object[]> findOpportunitiesByProduct();
+
+    //Count of all CLOSED_WON Opportunities by the product
+    @Query("SELECT o.product, COUNT(o.id) FROM Opportunity o WHERE o.status = 'CLOSED_WON' GROUP BY o.product")
+         List<Object[]> findOpportunitiesClosedWonByProduct();
+
+    //Count of all CLOSED_LOST Opportunities by the product
+    @Query("SELECT o.product, COUNT(o.id) FROM Opportunity o WHERE o.status = 'CLOSED_LOST' GROUP BY o.product")
+          List<Object[]> findOpportunitiesClosedLostByProduct();
+
+    //Count of all OPEN Opportunities by the product
+    @Query("SELECT o.product, COUNT(o.id) FROM Opportunity o WHERE o.status = 'OPEN' GROUP BY o.product")
+          List<Object[]> findOpportunitiesOpenByProduct();
+
+
     /*
            @Query("SELECT o.salesRep, COUNT(o.id) FROM Opportunity o GROUP BY o.salesRep")
      *     List<Object[]> findOpportunitiesBySalesRep();
@@ -42,22 +60,6 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
            //Count of all OPEN Opportunities by SalesRep
            @Query("SELECT o.salesRep, COUNT(o.id) FROM Opportunity o WHERE o.status = 'OPEN' GROUP BY o.salesRep")
      *     List<Object[]> findOpportunitiesOpenBySalesRep();
-
-           //Count of all Opportunities by the product
-           @Query("SELECT o.product, COUNT(o.id) FROM Opportunity o GROUP BY o.product")
-     *     List<Object[]> findOpportunitiesByProduct();
-
-           //Count of all CLOSED_WON Opportunities by the product
-           @Query("SELECT o.product, COUNT(o.id) FROM Opportunity o WHERE o.status = 'CLOSED_WON' GROUP BY o.product")
-     *     List<Object[]> findOpportunitiesClosedWonByProduct();
-
-           //Count of all CLOSED_LOST Opportunities by the product
-           @Query("SELECT o.product, COUNT(o.id) FROM Opportunity o WHERE o.status = 'CLOSED_LOST' GROUP BY o.product")
-     *     List<Object[]> findOpportunitiesClosedLostByProduct();
-
-           //Count of all OPEN Opportunities by the product
-           @Query("SELECT o.product, COUNT(o.id) FROM Opportunity o WHERE o.status = 'OPEN' GROUP BY o.product")
-     *     List<Object[]> findOpportunitiesOpenByProduct();
 
            //Count of all Opportunities by country
            @Query("SELECT a.country, COUNT(o.id) FROM Opportunity o JOIN Account a ON o.accountO=a.id GROUP BY a.country")
