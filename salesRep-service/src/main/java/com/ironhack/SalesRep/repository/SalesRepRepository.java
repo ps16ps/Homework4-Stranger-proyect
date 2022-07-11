@@ -10,6 +10,4 @@ import java.util.List;
 
 @Repository
 public interface SalesRepRepository extends JpaRepository<SalesRep, Long> {
-    @Query("SELECT l.salesRepId, COUNT(l.salesRepId) FROM Lead l GROUP BY l.salesRepId")
-    List<Object[]> findSalesRepsById();
 }

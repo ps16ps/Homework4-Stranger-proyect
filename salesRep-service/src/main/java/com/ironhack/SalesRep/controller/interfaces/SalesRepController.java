@@ -7,4 +7,5 @@ import java.util.List;
 public interface SalesRepController {
     List<SalesRep> getAllSalesRep();
     SalesRep getSalesRepById(Long id);
+    SalesRep postSalesRep(SalesRep salesRep);
 }

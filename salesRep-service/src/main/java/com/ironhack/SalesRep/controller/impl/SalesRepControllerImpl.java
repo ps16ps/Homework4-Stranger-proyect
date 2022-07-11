@@ -6,10 +6,7 @@ import com.ironhack.SalesRep.repository.SalesRepRepository;
 import com.ironhack.SalesRep.services.interfaces.SalesRepService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,7 +19,7 @@ public class SalesRepControllerImpl implements SalesRepController {
     @Autowired
     private SalesRepService salesRepService;
 
-    @GetMapping("salesRep")
+    @GetMapping("/salesRep")
     @ResponseStatus(HttpStatus.OK)
     public List<SalesRep> getAllSalesRep() {
         return salesRepRepository.findAll();
@@ -34,11 +31,9 @@ public class SalesRepControllerImpl implements SalesRepController {
         return salesRepService.getSalesRepById(id);
     }
 
-//    @GetMapping("/salesRep/status/{status}")
-//    @ResponseStatus(HttpStatus.OK)
-//    public List<SalesRep> getSalesRepByStatus(@PathVariable String status) {
-//        return salesRepService.getSalesRepByStatus(status);
-//    }
-
-
+    @PostMapping("/salesRep")
+    @ResponseStatus(HttpStatus.CREATED)
+    public SalesRep postSalesRep(@RequestBody SalesRep salesRep){
+        return salesRepRepository.save(salesRep);
+    }
 }

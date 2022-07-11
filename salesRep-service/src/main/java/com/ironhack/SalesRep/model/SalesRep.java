@@ -1,11 +1,9 @@
 package com.ironhack.SalesRep.model;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
 public class SalesRep {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
