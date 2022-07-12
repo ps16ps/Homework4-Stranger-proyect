@@ -122,7 +122,7 @@ public class EdgeControllerImpl implements EdgeController {
                 account.getId());
         contact = contactClient.saveContact(contact);
         OpportunityDTO opportunityDTO = new OpportunityDTO(convertDTO.getProduct(), convertDTO.getQuantity(),
-                "OPEN", contact.getId(),account.getId(), lead.getSalesRepId());
+                contact.getId(),account.getId(), lead.getSalesRepId());
         Opportunity opportunity = opportunityClient.createOpportunity(opportunityDTO);
         //TODO: DELETE LEAD
         return "Lead " + id + " converted";

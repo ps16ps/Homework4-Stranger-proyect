@@ -94,12 +94,11 @@ public class OpportunityControllerImpl implements OpportunityController {
         String product = opportunityDto.getProduct();
         int quantity = opportunityDto.getQuantity();
         Long decisionMakerId = opportunityDto.getDecisionMakerId();
-        String status = opportunityDto.getStatus();
         Long accountId = opportunityDto.getAccountId();
         Long salesRepId = opportunityDto.getSalesRepId();
 
        return opportunityService.createOpportunity(product, quantity,
-               decisionMakerId, status, accountId, salesRepId);
+               decisionMakerId, accountId, salesRepId);
     }
 
     @PatchMapping("/opportunities/{id}/update-status")

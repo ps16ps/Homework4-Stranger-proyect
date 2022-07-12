@@ -41,7 +41,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"product\" : \"BOX\",\r\n        \"quantity\" : 2,\r\n        \"decisionMakerId\" : 1,\r\n        \"status\" : \"OPEN\",\r\n        \"accountId\" : 1,\r\n        \"salesRepId\" : 1\r\n}\r\n",
+					"raw": "{\"product\" : \"BOX\",\r\n        \"quantity\" : 3,\r\n        \"decisionMakerId\" : 1,\r\n        \"accountId\" : 1,\r\n        \"salesRepId\" : 1\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"

@@ -29,12 +29,12 @@ public class Opportunity {
     public Opportunity() {
     }
 
-    public Opportunity(Product product, int quantity, Long decisionMakerId, Status status,
+    public Opportunity(Product product, int quantity, Long decisionMakerId,
                        Long accountId, Long salesRepId) {
         this.product = product;
         this.quantity = quantity;
         this.decisionMakerId = decisionMakerId;
-        this.status = status; //OPEN
+        this.status = Status.OPEN;
         this.accountId = accountId;
         this.salesRepId = salesRepId;
     }

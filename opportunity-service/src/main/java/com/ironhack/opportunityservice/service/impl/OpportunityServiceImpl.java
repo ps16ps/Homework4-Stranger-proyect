@@ -43,17 +43,9 @@ public class OpportunityServiceImpl implements OpportunityService {
     }
 
     public Opportunity createOpportunity(String product ,int quantity, Long decisionMakerId,
-                                         String status, Long accountId, Long salesRepId ) {
+                                         Long accountId, Long salesRepId ) {
 
         Product newProduct;
-        Status newStatus;
-
-        try {
-            newStatus = Status.valueOf(status.toUpperCase());
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Status not found. Status available are " + Arrays.toString(Status.values()));
-        }
 
         try {
             newProduct = Product.valueOf(product.toUpperCase());
@@ -62,8 +54,8 @@ public class OpportunityServiceImpl implements OpportunityService {
                     "Status not found. Status available are " + Arrays.toString(Status.values()));
         }
 
-            Opportunity opportunity = new Opportunity(newProduct, quantity,
-                    decisionMakerId, newStatus, accountId, salesRepId);
+        Opportunity opportunity = new Opportunity(newProduct, quantity,
+                    decisionMakerId, accountId, salesRepId);
 
         return opportunityRepository.save(opportunity);
     }

@@ -8,30 +8,24 @@ public class OpportunityDTO {
     @Min(value = 1,message = "The quantity of trucks has to be higher than 0")
     private int quantity;
 
-    private String status;
-
     private Long decisionMakerId;
 
     //relation Many TO One
     private Long accountId;
-
 
     private Long salesRepId;
 
     public OpportunityDTO() {
     }
 
-    public OpportunityDTO(String product, int quantity, String status) {
+    public OpportunityDTO(String product, int quantity) {
         this.product = product;
         this.quantity = quantity;
-        this.status = status;
     }
 
-    public OpportunityDTO(String product, int quantity, String status,
-                          Long decisionMakerId, Long accountId, Long salesRepId) {
+    public OpportunityDTO(String product, int quantity, Long decisionMakerId, Long accountId, Long salesRepId) {
         this.product = product;
         this.quantity = quantity;
-        this.status = status;
         this.decisionMakerId = decisionMakerId;
         this.accountId = accountId;
         this.salesRepId = salesRepId;
@@ -52,14 +46,6 @@ public class OpportunityDTO {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public Long getDecisionMakerId() {

@@ -12,7 +12,7 @@ public interface OpportunityService {
     double getMedQuantity();
 
     Opportunity createOpportunity(String product ,int quantity, Long decisionMakerId,
-                                  String status, Long accountId, Long salesRepId );
+                                  Long accountId, Long salesRepId );
 
     void updateStatus(Long id, String status);
 

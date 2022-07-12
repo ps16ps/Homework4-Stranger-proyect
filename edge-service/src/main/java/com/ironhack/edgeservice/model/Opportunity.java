@@ -28,20 +28,17 @@ public class Opportunity {
     public Opportunity() {
     }
 
-    public Opportunity(Product product, int quantity, Long decisionMakerId, Status status,
+    public Opportunity(Product product, int quantity, Long decisionMakerId,
                        Long accountId, Long salesRepId) {
         this.product = product;
         this.quantity = quantity;
         this.decisionMakerId = decisionMakerId;
-        this.status = status;
+        this.status = Status.OPEN;
         this.accountId = accountId;
         this.salesRepId = salesRepId;
     }
 
-
-
     //getters and setters needed
-
 
     public Long getId() {
         return id;
