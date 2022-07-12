@@ -16,7 +16,6 @@ public class Lead {
     private String phoneNumber;
     private String email;
     private String companyName;
-
     private Long salesRepId;
 
     public Lead() {
@@ -71,11 +70,7 @@ public class Lead {
         this.companyName = companyName;
     }
 
-    public Long getSalesRep() {
-        return salesRepId;
-    }
-
-    public void setSalesRepId(Long salesRep) {
+    public void setSalesRepId(Long salesRepId) {
         this.salesRepId = salesRepId;
     }
 

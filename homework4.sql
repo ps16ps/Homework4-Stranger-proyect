@@ -4,7 +4,7 @@ USE homework3;
 
 DROP SCHEMA IF EXISTS homework3_test;
 CREATE SCHEMA homework3_test;
-USE homework3_test;
+-- USE homework3_test;
 
 DROP TABLE IF EXISTS opportunity;
 DROP TABLE IF EXISTS contact;
@@ -26,7 +26,7 @@ email VARCHAR(255),
 company_name VARCHAR(255),
 sales_rep_id BIGINT,
 PRIMARY KEY(id),
-FOREIGN KEY (sales_rep) REFERENCES sales_rep_table(id)
+FOREIGN KEY (sales_rep_id) REFERENCES sales_rep(id)
 );
 
 CREATE TABLE account(
@@ -53,16 +53,14 @@ CREATE TABLE opportunity(
     id BIGINT NOT NULL AUTO_INCREMENT,
     product VARCHAR(255),
     quantity INT,
-    decision_maker BIGINT,
+    decision_maker_id BIGINT,
     status VARCHAR(255),
     account_id BIGINT,
     sales_rep_id BIGINT,
-	PRIMARY KEY(id)
--- FOREIGN KEY (account_id) REFERENCES account(id),
--- FOREIGN KEY (decision_maker) REFERENCES contact(id),
--- FOREIGN KEY (sales_rep) REFERENCES sales_rep_table(id)
+	PRIMARY KEY(id),
+	FOREIGN KEY (account_id) REFERENCES account(id),
+	FOREIGN KEY (decision_maker_id) REFERENCES contact(id),
+	FOREIGN KEY (sales_rep_id) REFERENCES sales_rep(id)
     );
     
-
-    SELECT * FROM opportunity;
     

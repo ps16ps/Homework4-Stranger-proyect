@@ -14,15 +14,17 @@ public class Contact {
     private String phoneNumber;
     private String email;
     private String companyName;
+    private Long accountId;
 
     public Contact() {
     }
 
-    public Contact(String name, String phoneNumber, String email, String companyName) {
+    public Contact(String name, String phoneNumber, String email, String companyName, Long accountId) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.companyName = companyName;
+        this.accountId = accountId;
     }
 
     public long getId() {
@@ -63,5 +65,13 @@ public class Contact {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public Long getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
     }
 }

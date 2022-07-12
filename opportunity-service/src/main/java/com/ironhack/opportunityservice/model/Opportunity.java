@@ -23,11 +23,9 @@ public class Opportunity {
 
     private Long accountId;
 
-
     private Long salesRepId;
 
     //constructors
-
     public Opportunity() {
     }
 
@@ -41,11 +39,7 @@ public class Opportunity {
         this.salesRepId = salesRepId;
     }
 
-
-
     //getters and setters needed
-
-
     public Long getId() {
         return id;
     }

@@ -22,11 +22,9 @@ public class Opportunity {
     private Status status;
     private Long accountId;
 
-
     private Long salesRepId;
 
     //constructors
-
     public Opportunity() {
     }
 
