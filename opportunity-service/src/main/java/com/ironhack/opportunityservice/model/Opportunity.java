@@ -34,7 +34,7 @@ public class Opportunity {
         this.product = product;
         this.quantity = quantity;
         this.decisionMakerId = decisionMakerId;
-        this.status = status;
+        this.status = status; //OPEN
         this.accountId = accountId;
         this.salesRepId = salesRepId;
     }
