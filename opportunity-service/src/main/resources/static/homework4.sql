@@ -12,7 +12,7 @@ DROP TABLE IF EXISTS account;
 DROP TABLE IF EXISTS leads;
 DROP TABLE IF EXISTS sales_rep_table;
 
-CREATE TABLE sales_rep_table(
+CREATE TABLE sales_rep(
     id BIGINT NOT NULL AUTO_INCREMENT,
     name VARCHAR(255),
     PRIMARY KEY(id)
@@ -24,7 +24,7 @@ name VARCHAR(255),
 phone_number VARCHAR(255),
 email VARCHAR(255),
 company_name VARCHAR(255),
-sales_rep BIGINT,
+sales_rep_id BIGINT,
 PRIMARY KEY(id),
 FOREIGN KEY (sales_rep) REFERENCES sales_rep_table(id)
 );
@@ -56,7 +56,7 @@ CREATE TABLE opportunity(
     decision_maker BIGINT,
     status VARCHAR(255),
     account_id BIGINT,
-    sales_rep BIGINT,
+    sales_rep_id BIGINT,
 	PRIMARY KEY(id)
 -- FOREIGN KEY (account_id) REFERENCES account(id),
 -- FOREIGN KEY (decision_maker) REFERENCES contact(id),

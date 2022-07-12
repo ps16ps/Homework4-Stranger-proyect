@@ -1,7 +1,0 @@
-com\ironhack\SalesRep\controller\interfaces\SalesRepController.class
-com\ironhack\SalesRep\model\SalesRep.class
-com\ironhack\SalesRep\services\impl\SalesRepServiceImpl.class
-com\ironhack\SalesRep\SalesRepServiceApplication.class
-com\ironhack\SalesRep\services\interfaces\SalesRepService.class
-com\ironhack\SalesRep\controller\impl\SalesRepControllerImpl.class
-com\ironhack\SalesRep\repository\SalesRepRepository.class
