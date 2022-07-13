@@ -101,10 +101,9 @@ public class OpportunityControllerImpl implements OpportunityController {
                decisionMakerId, accountId, salesRepId);
     }
 
-    @PatchMapping("/opportunities/{id}/update-status")
+    @PutMapping("/opportunities/{id}/update-status")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateStatus(@PathVariable Long id, @RequestBody StatusDTO statusDTO){
         opportunityService.updateStatus(id, statusDTO.getStatus());
     }
-
 }

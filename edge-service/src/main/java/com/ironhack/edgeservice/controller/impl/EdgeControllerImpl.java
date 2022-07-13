@@ -4,6 +4,7 @@ import com.ironhack.edgeservice.client.*;
 import com.ironhack.edgeservice.controller.dto.AccountDTO;
 import com.ironhack.edgeservice.controller.dto.ConvertDTO;
 import com.ironhack.edgeservice.controller.dto.OpportunityDTO;
+import com.ironhack.edgeservice.controller.dto.StatusDTO;
 import com.ironhack.edgeservice.controller.interfaces.EdgeController;
 import com.ironhack.edgeservice.enums.Status;
 import com.ironhack.edgeservice.model.*;
@@ -131,8 +132,25 @@ public class EdgeControllerImpl implements EdgeController {
     //Put??
 
     //Patch
+    @PatchMapping("/opportunities/{id}/update-status")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateStatus(@PathVariable Long id, @RequestBody StatusDTO statusDTO){
+        opportunityClient.updateStatus(id,statusDTO);
+    }
 
-
+    @PatchMapping("/opportunities/{id}/close-lost")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void closeLostOpportunity(@PathVariable Long id){
+        StatusDTO statusDTO = new StatusDTO("CLOSED_LOST");
+        opportunityClient.updateStatus(id,statusDTO);
+    }
+//
+    @PatchMapping("/opportunities/{id}/close-won")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void closeWonOpportunity(@PathVariable Long id){
+        StatusDTO statusDTO = new StatusDTO("CLOSED_WON");
+        opportunityClient.updateStatus(id,statusDTO);
+    }
     //Delete
 
 

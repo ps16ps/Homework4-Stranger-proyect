@@ -46,10 +46,6 @@ public interface OpportunityClient {
     @PostMapping("/opportunities")
     Opportunity createOpportunity(@RequestBody OpportunityDTO opportunityDto);
 
-    @PatchMapping("/opportunities/{id}/update-status")
-    void updateStatus(@PathVariable Long id, @RequestBody StatusDTO statusDTO);
-
-
-
-
+    @PutMapping("/opportunities/{id}/update-status")
+    void updateStatus(@PathVariable Long id,@RequestBody StatusDTO statusDTO);
 }
