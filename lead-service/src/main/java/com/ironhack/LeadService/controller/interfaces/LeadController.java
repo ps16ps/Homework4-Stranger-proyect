@@ -8,4 +8,6 @@ public interface LeadController {
     List<Lead> getAllLead();
     Lead getLeadById(Long id);
     Lead postLead(Lead lead);
+
+    void delete(Long id);
 }

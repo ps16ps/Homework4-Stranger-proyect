@@ -21,4 +21,11 @@ public class LeadServiceImpl implements LeadService {
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Lead not found"));
         return lead;
     }
+
+    @Override
+    public void delete(Long id) {
+        Lead lead = leadRepository.findById(id).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Lead not found"));
+        leadRepository.deleteById(id);
+    }
 }
