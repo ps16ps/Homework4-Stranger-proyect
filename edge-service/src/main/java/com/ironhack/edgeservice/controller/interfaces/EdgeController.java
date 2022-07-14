@@ -26,9 +26,7 @@ public interface EdgeController {
     SalesRep postSalesRep(SalesRep salesRep);
 
     Opportunity getOpportunitiesById( Long id);
-
     Account getAccountsById(Long id);
-    void updateStatus(Long id,StatusDTO statusDTO);
     void closeLostOpportunity(Long id);
 
     void closeWonOpportunity(Long id);

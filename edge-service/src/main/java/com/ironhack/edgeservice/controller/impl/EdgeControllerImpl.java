@@ -9,6 +9,7 @@ import com.ironhack.edgeservice.controller.interfaces.EdgeController;
 import com.ironhack.edgeservice.enums.Status;
 import com.ironhack.edgeservice.model.*;
 import com.ironhack.edgeservice.repository.EdgeRepository;
+import com.ironhack.edgeservice.service.interfaces.EdgeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +36,9 @@ public class EdgeControllerImpl implements EdgeController {
 
     @Autowired
     private EdgeRepository edgeRepository;
+
+    @Autowired
+    private EdgeService edgeService;
 
     //Gets
     @GetMapping("/leads")
@@ -103,6 +107,7 @@ public class EdgeControllerImpl implements EdgeController {
     public double getAvgQuantity(){
         return opportunityClient.getAvgQuantity();
     }
+
     @GetMapping("/opportunity-quantity/max")
     @ResponseStatus(HttpStatus.OK)
     public int getMaxQuantity(){
@@ -184,52 +189,25 @@ public class EdgeControllerImpl implements EdgeController {
     public SalesRep postSalesRep(@RequestBody SalesRep salesRep){
         return salesRepClient.postSalesRep(salesRep);
     }
+
     @PostMapping("/convert/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public String convertLead(@PathVariable Long id, @RequestBody ConvertDTO convertDTO){
-        Lead lead = leadClient.getLeadById(id);
-        Account account;
-        if (convertDTO.getAccountId() != null){
-            account = accountClient.getAccountById(convertDTO.getAccountId());
-        } else {
-            AccountDTO accountDTO = new AccountDTO(convertDTO.getIndustry(),convertDTO.getEmployeeCount(),
-                    convertDTO.getCity(),convertDTO.getCountry());
-            account = accountClient.createAccount(accountDTO);
-        }
-        Contact contact = new Contact(lead.getName(),lead.getPhoneNumber(),lead.getEmail(),lead.getCompanyName(),
-                account.getId());
-        contact = contactClient.saveContact(contact);
-        OpportunityDTO opportunityDTO = new OpportunityDTO(convertDTO.getProduct(), convertDTO.getQuantity(),
-                contact.getId(),account.getId(), lead.getSalesRepId());
-        Opportunity opportunity = opportunityClient.createOpportunity(opportunityDTO);
-        //TODO: DELETE LEAD
-        return "Lead " + id + " converted";
+        return edgeService.convertLead(id, convertDTO);
     }
-
-    //Put??
 
     //Patch
-    @PatchMapping("/opportunities/{id}/update-status")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateStatus(@PathVariable Long id, @RequestBody StatusDTO statusDTO){
-        opportunityClient.updateStatus(id,statusDTO);
-    }
-
     @PatchMapping("/opportunities/{id}/close-lost")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void closeLostOpportunity(@PathVariable Long id){
         StatusDTO statusDTO = new StatusDTO("CLOSED_LOST");
         opportunityClient.updateStatus(id,statusDTO);
     }
-//
+
     @PatchMapping("/opportunities/{id}/close-won")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void closeWonOpportunity(@PathVariable Long id){
         StatusDTO statusDTO = new StatusDTO("CLOSED_WON");
         opportunityClient.updateStatus(id,statusDTO);
     }
-    //Delete
-
-
-
 }
