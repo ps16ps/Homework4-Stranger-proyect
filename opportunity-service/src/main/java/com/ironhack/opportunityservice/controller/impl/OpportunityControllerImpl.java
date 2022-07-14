@@ -38,7 +38,7 @@ public class OpportunityControllerImpl implements OpportunityController {
 
         return opportunityService.getOpportunityById(id);
     }
-        //Pueden ser request params? en un solo get?
+
     @GetMapping("/opportunity-quantity/avg")
     @ResponseStatus(HttpStatus.OK)
     public double getAvgQuantity() {
@@ -85,9 +85,33 @@ public class OpportunityControllerImpl implements OpportunityController {
     @ResponseStatus(HttpStatus.OK)
     public List <Object[]> getOpportunitiesOpenByProduct(){
         return opportunityRepository.findOpportunitiesOpenByProduct();
-    };
+    }
 
+    @GetMapping("/opportunity-sales-rep")
+    @ResponseStatus(HttpStatus.OK)
+    public List <Object[]> getOpportunitiesBySalesRep(){
+        return opportunityRepository.findOpportunitiesBySalesRep();
+    }
 
+    @GetMapping("/opportunity-sales-rep/closed-won")
+    @ResponseStatus(HttpStatus.OK)
+    public List <Object[]> getOpportunitiesClosedWonBySalesRep(){
+        return opportunityRepository.findOpportunitiesClosedWonBySalesRep();
+    }
+
+    @GetMapping("/opportunity-sales-rep/closed-lost")
+    @ResponseStatus(HttpStatus.OK)
+    public List <Object[]> getOpportunitiesClosedLostBySalesRep(){
+        return opportunityRepository.findOpportunitiesClosedLostBySalesRep();
+    }
+
+    @GetMapping("/opportunity-sales-rep/open")
+    @ResponseStatus(HttpStatus.OK)
+    public List <Object[]> getOpportunitiesOpenBySalesRep(){
+        return opportunityRepository.findOpportunitiesOpenBySalesRep();
+    }
+
+    //Post Requests
     @PostMapping("/opportunities")
     @ResponseStatus(HttpStatus.CREATED)
     public Opportunity createOpportunity(@RequestBody OpportunityDTO opportunityDto) {

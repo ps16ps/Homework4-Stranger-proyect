@@ -31,6 +31,14 @@ public interface OpportunityController {
 
     List <Object[]> getOpportunitiesOpenByProduct();
 
+    List<Object[]> getOpportunitiesBySalesRep();
+
+    List<Object[]> getOpportunitiesClosedWonBySalesRep();
+
+    List<Object[]> getOpportunitiesClosedLostBySalesRep();
+
+    List<Object[]> getOpportunitiesOpenBySalesRep();
+
 
 
 

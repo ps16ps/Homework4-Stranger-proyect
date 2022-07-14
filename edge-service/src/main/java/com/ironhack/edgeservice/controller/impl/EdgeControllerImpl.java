@@ -97,7 +97,74 @@ public class EdgeControllerImpl implements EdgeController {
         return accountClient.getAccountById(id);
     }
 
-    // Get QUERYs
+    //All Opportunity Get Requests in opportunity client
+    @GetMapping("/opportunity-quantity/avg")
+    @ResponseStatus(HttpStatus.OK)
+    public double getAvgQuantity(){
+        return opportunityClient.getAvgQuantity();
+    }
+    @GetMapping("/opportunity-quantity/max")
+    @ResponseStatus(HttpStatus.OK)
+    public int getMaxQuantity(){
+        return opportunityClient.getMaxQuantity();
+    }
+
+    @GetMapping("/opportunity-quantity/min")
+    @ResponseStatus(HttpStatus.OK)
+    public int getMinQuantity(){
+        return opportunityClient.getMinQuantity();
+    }
+
+    @GetMapping("/opportunity-quantity/med")
+    @ResponseStatus(HttpStatus.OK)
+    public double getMedQuantity(){
+        return opportunityClient.getMedQuantity();
+    }
+
+    @GetMapping("/opportunity-products")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Object[]> getAllOpportunitiesByProduct(){
+        return opportunityClient.getAllOpportunitiesByProduct();
+    }
+
+    @GetMapping("/opportunity-products/closed-won")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Object[]> getOpportunitiesClosedWonByProduct(){
+        return opportunityClient.getOpportunitiesClosedWonByProduct();
+    }
+
+    @GetMapping("/opportunity-products/closed-lost")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Object[]> getOpportunitiesClosedLostByProduct(){
+        return opportunityClient.getOpportunitiesClosedLostByProduct();
+    }
+    @GetMapping("/opportunity-products/open")
+    @ResponseStatus(HttpStatus.OK)
+    public List <Object[]> getOpportunitiesOpenByProduct(){
+        return opportunityClient.getOpportunitiesOpenByProduct();
+    }
+
+    @GetMapping("/opportunity-sales-rep")
+    @ResponseStatus(HttpStatus.OK)
+    public List <Object[]> getOpportunitiesBySalesRep(){
+        return opportunityClient.getOpportunitiesBySalesRep();
+    };
+    @GetMapping("/opportunity-sales-rep/closed-won")
+    public List <Object[]> getOpportunitiesClosedWonBySalesRep(){
+        return opportunityClient.getOpportunitiesClosedWonBySalesRep();
+    }
+
+    @GetMapping("/opportunity-sales-rep/closed-lost")
+    public List <Object[]> getOpportunitiesClosedLostBySalesRep(){
+        return opportunityClient.getOpportunitiesClosedLostBySalesRep();
+    }
+
+    @GetMapping("/opportunity-sales-rep/open")
+    public List <Object[]> getOpportunitiesOpenBySalesRep(){
+        return opportunityClient.getOpportunitiesOpenBySalesRep();
+    }
+
+    // GET QUERYs : agregar las del EdgeRepo
 
     @GetMapping("/opportunities/country")
     @ResponseStatus(HttpStatus.OK)
@@ -105,8 +172,18 @@ public class EdgeControllerImpl implements EdgeController {
         return edgeRepository.findOpportunitiesByCountry();
     }
 
-    //Posts
-    // new salesRep, new lead, convert lead
+    //Posts : new salesRep, new lead, convert lead
+    @PostMapping("/leads")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Lead postLead(@RequestBody Lead lead){
+        return leadClient.postLead(lead);
+    }
+
+    @PostMapping("/sales-rep")
+    @ResponseStatus(HttpStatus.CREATED)
+    public SalesRep postSalesRep(@RequestBody SalesRep salesRep){
+        return salesRepClient.postSalesRep(salesRep);
+    }
     @PostMapping("/convert/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public String convertLead(@PathVariable Long id, @RequestBody ConvertDTO convertDTO){
