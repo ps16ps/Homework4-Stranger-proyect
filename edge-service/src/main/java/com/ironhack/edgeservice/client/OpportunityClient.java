@@ -25,7 +25,7 @@ public interface OpportunityClient {
     int getMaxQuantity();
 
     @GetMapping("/opportunity-quantity/min")
-    public int getMinQuantity();
+    int getMinQuantity();
 
     @GetMapping("/opportunity-quantity/med")
     double getMedQuantity();
@@ -39,9 +39,19 @@ public interface OpportunityClient {
     @GetMapping("/opportunity-products/closed-lost")
     List<Object[]> getOpportunitiesClosedLostByProduct();
 
-
     @GetMapping("/opportunity-products/open")
     List <Object[]> getOpportunitiesOpenByProduct();
+
+    @GetMapping("/opportunity-sales-rep")
+    List <Object[]> getOpportunitiesBySalesRep();
+    @GetMapping("/opportunity-sales-rep/closed-won")
+    List <Object[]> getOpportunitiesClosedWonBySalesRep();
+
+    @GetMapping("/opportunity-sales-rep/closed-lost")
+    List <Object[]> getOpportunitiesClosedLostBySalesRep();
+
+    @GetMapping("/opportunity-sales-rep/open")
+    List <Object[]> getOpportunitiesOpenBySalesRep();
 
     @PostMapping("/opportunities")
     Opportunity createOpportunity(@RequestBody OpportunityDTO opportunityDto);

@@ -1,8 +1,0 @@
-com\ironhack\contactproxyservice\service\ContactService.class
-com\ironhack\contactproxyservice\controller\impl\ContactControllerImpl.class
-com\ironhack\contactproxyservice\controller\interfaces\ContactController.class
-com\ironhack\contactproxyservice\controller\dto\ContactDTO.class
-com\ironhack\contactproxyservice\model\Contact.class
-com\ironhack\contactproxyservice\ContactProxyServiceApplication.class
-com\ironhack\contactproxyservice\service\ContactServiceImpl.class
-com\ironhack\contactproxyservice\repository\ContactRepository.class

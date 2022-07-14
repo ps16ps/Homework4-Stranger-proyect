@@ -17,7 +17,15 @@ public interface EdgeController {
     List<Opportunity> getAllOpportunities();
 
     List<Account> getAllAccounts();
+    Lead getLeadsById(Long id);
 
+    SalesRep getSalesRepsById(Long id);
+
+    Contact getContactsById(Long id);
+
+    Opportunity getOpportunitiesById( Long id);
+
+    Account getAccountsById(Long id);
     void updateStatus(Long id,StatusDTO statusDTO);
     void closeLostOpportunity(Long id);
 
