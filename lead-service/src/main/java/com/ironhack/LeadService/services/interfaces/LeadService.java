@@ -4,4 +4,6 @@ import com.ironhack.LeadService.model.Lead;
 
 public interface LeadService {
     Lead getLeadById(Long id);
+
+    void delete(Long id);
 }

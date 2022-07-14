@@ -35,4 +35,10 @@ public class LeadControllerImpl implements LeadController {
     public Lead postLead(@RequestBody Lead lead){
         return leadRepository.save(lead);
     }
+
+    @DeleteMapping("/leads/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        leadService.delete(id);
+    }
 }
