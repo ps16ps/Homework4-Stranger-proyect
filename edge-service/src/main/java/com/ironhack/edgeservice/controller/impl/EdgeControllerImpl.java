@@ -173,6 +173,17 @@ public class EdgeControllerImpl implements EdgeController {
     }
 
     //Posts : new salesRep, new lead, convert lead
+    @PostMapping("/leads")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Lead postLead(@RequestBody Lead lead){
+        return leadClient.postLead(lead);
+    }
+
+    @PostMapping("/sales-rep")
+    @ResponseStatus(HttpStatus.CREATED)
+    public SalesRep postSalesRep(@RequestBody SalesRep salesRep){
+        return salesRepClient.postSalesRep(salesRep);
+    }
     @PostMapping("/convert/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public String convertLead(@PathVariable Long id, @RequestBody ConvertDTO convertDTO){

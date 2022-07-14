@@ -22,6 +22,8 @@ public interface EdgeController {
     SalesRep getSalesRepsById(Long id);
 
     Contact getContactsById(Long id);
+    Lead postLead(Lead lead);
+    SalesRep postSalesRep(SalesRep salesRep);
 
     Opportunity getOpportunitiesById( Long id);
 
