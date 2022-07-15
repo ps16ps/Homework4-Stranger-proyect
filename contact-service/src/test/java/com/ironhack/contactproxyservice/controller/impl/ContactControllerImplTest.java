@@ -39,8 +39,10 @@ class ContactControllerImplTest {
 
     @BeforeEach
     void setUp() {
-        contact1 = new Contact("Alba","666666999","alba@gmail.com", "albaCompany",1L);
-        contact2 = new Contact("Iñaki","666666888","iñaki@gmail.com", "IñakiCompany",2L);
+        contact1 = new Contact("Alba","666666999","alba@gmail.com",
+                "albaCompany",1L);
+        contact2 = new Contact("Iñaki","666666888","iñaki@gmail.com",
+                "IñakiCompany",2L);
         contactRepository.saveAll(List.of(contact1,contact2));
     }
 
@@ -79,7 +81,8 @@ class ContactControllerImplTest {
 
     @Test
     void saveContact() throws Exception {
-        Contact contact3 = new Contact("Asier","666666444","asier@gmail.com", "asierCompany",3L);
+        Contact contact3 = new Contact("Asier","666666444","asier@gmail.com",
+                "asierCompany",3L);
         String body = objectMapper.writeValueAsString(contact3);
         MvcResult mvcResult = mockMvc.perform(
                         post("/contacts")
