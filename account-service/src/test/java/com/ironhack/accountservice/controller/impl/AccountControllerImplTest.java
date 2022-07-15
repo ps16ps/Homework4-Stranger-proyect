@@ -34,7 +34,6 @@ class AccountControllerImplTest {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-
     Account account1, account2;
 
     @BeforeEach
@@ -80,9 +79,7 @@ class AccountControllerImplTest {
     @Test
     void getAccountById_WrongId_Error() throws Exception {
         // Llamar con el GET a /accounts/{id}
-        // Comprobamos que el status code de  respuesta sea OK
-        // Comprobamos que la respuesta esté en formato JSON
-        // Comprobamos que el resultado es el que toca
+        // Comprobamos que el status code de  respuesta sea NOT_FOUND
         MvcResult mvcResult = mockMvc.perform(get("/accounts/-1"))
                 .andExpect(status().isNotFound())
                 .andReturn(); //Para cerrar la petición
@@ -141,7 +138,7 @@ class AccountControllerImplTest {
     }
 
     @Test
-    void createAccount() throws Exception {
+    void createAccount_CorrectDTO_Account() throws Exception {
         // Llamar con el POST a /accounts
         // Comprobamos que el status code de respuesta sea CREATED
         // Comprobamos que la respuesta está en formato JSON
@@ -169,9 +166,7 @@ class AccountControllerImplTest {
     @Test
     void createAccount_WrongIndustry_Error() throws Exception {
         // Llamar con el POST a /accounts
-        // Comprobamos que el status code de respuesta sea CREATED
-        // Comprobamos que la respuesta está en formato JSON
-        // Comprobamos que el resultado es el que toca
+        // Comprobamos que el status code de respuesta sea BAD_REQUEST
 
         // Preparo la account que voy a insertar
         AccountDTO accountDTO = new AccountDTO("PRODUE",25,"Paris","France");
