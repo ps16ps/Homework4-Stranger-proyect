@@ -5,18 +5,22 @@ import com.ironhack.edgeservice.client.*;
 import com.ironhack.edgeservice.enums.Industry;
 import com.ironhack.edgeservice.enums.Product;
 import com.ironhack.edgeservice.enums.Status;
-import com.ironhack.edgeservice.model.Account;
-import com.ironhack.edgeservice.model.Opportunity;
+import com.ironhack.edgeservice.model.*;
 import com.ironhack.edgeservice.repository.AccountRepository;
 import com.ironhack.edgeservice.repository.EdgeRepository;
 import com.ironhack.edgeservice.service.interfaces.EdgeService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
@@ -29,25 +33,25 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@RunWith(SpringRunner.class)
 class EdgeControllerImplTest {
 
     @Autowired
     private MockMvc mockMvc;
-
     @Autowired
-    private LeadClient leadClient;
+    ApplicationContext context;
 
-    @Autowired
-    private SalesRepClient salesRepClient;
+    @MockBean
+    private LeadClient mockLeadClient;
+    @MockBean
+    private SalesRepClient mockSalesRepClient;
+    @MockBean
+    private ContactClient mockContactClient;
+    @MockBean
+    private OpportunityClient mockOpportunityClient;
+    @MockBean
+    private AccountClient mockAccountClient;
 
-    @Autowired
-    private ContactClient contactClient;
-
-    @Autowired
-    private OpportunityClient opportunityClient;
-
-    @Autowired
-    private AccountClient accountClient;
     @Autowired
     private EdgeRepository edgeRepository;
     @Autowired
@@ -55,12 +59,25 @@ class EdgeControllerImplTest {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    SalesRep salesRep1, salesRep2;
+    Lead lead1, lead2;
+    Contact contact1, contact2;
     Opportunity opportunity1, opportunity2, opportunity3;
     Account account1, account2;
     @BeforeEach
     void setUp() {
+        salesRep1 = new SalesRep("Lia");
+        salesRep2 = new SalesRep("Pep");
+        lead1 = new Lead("Steve", "+34 6585698", "steve@gamil.com",
+                "Accenture", 1L);
+        lead2 = new Lead("Jeff", "+34 6899987", "jeff@gamil.com",
+                "Accenture", 2L);
         account1 = new Account(Industry.MEDICAL, 10,"Barcelona", "Spain");
         account2 = new Account(Industry.ECOMMERCE, 20,"Roma", "Italy");
+        contact1 = new Contact("Steve", "+34 6585698", "steve@gamil.com",
+                "Accenture", 1L);
+        contact2 = new Contact("Jeff", "+34 6899987", "jeff@gamil.com",
+                "Accenture", 2L);
         opportunity1 = new Opportunity(Product.BOX,10,1L,1L,1L);
         opportunity2 = new Opportunity(Product.FLATBED,20,1L,1L,2L);
         opportunity2.setStatus(Status.CLOSED_WON);
@@ -79,22 +96,58 @@ class EdgeControllerImplTest {
 
     @Test
     void getAllLeads() {
+        Mockito.when(mockLeadClient.getAllLead()).thenReturn(List.of(lead1,lead2));
+
+        LeadClient leadClientFromContext = context.getBean(LeadClient.class);
+        List<Lead> leads = leadClientFromContext.getAllLead();
+
+        assertEquals(List.of(lead1,lead2), leads);
+        Mockito.verify(mockLeadClient).getAllLead();
     }
 
     @Test
     void getAllSalesRep() {
+        Mockito.when(mockSalesRepClient.getAllSalesRep()).thenReturn(List.of(salesRep1,salesRep2));
+
+        SalesRepClient salesRepClientFromContext = context.getBean(SalesRepClient.class);
+        List<SalesRep> salesReps = salesRepClientFromContext.getAllSalesRep();
+
+        assertEquals(List.of(salesRep1,salesRep2), salesReps);
+        Mockito.verify(mockSalesRepClient).getAllSalesRep();
     }
 
     @Test
     void getAllContacts() {
+        Mockito.when(mockContactClient.findAll()).thenReturn(List.of(contact1,contact2));
+
+        ContactClient contactClientFromContext = context.getBean(ContactClient.class);
+        List<Contact> contacts = contactClientFromContext.findAll();
+
+        assertEquals(List.of(contact1,contact2), contacts);
+        Mockito.verify(mockContactClient).findAll();
     }
 
     @Test
     void getAllOpportunities() {
+        Mockito.when(mockOpportunityClient.getAllOpportunities())
+                .thenReturn(List.of(opportunity1,opportunity2,opportunity3));
+
+        OpportunityClient opportunityClientFromContext = context.getBean(OpportunityClient.class);
+        List<Opportunity> opportunities = opportunityClientFromContext.getAllOpportunities();
+
+        assertEquals(List.of(opportunity1,opportunity2,opportunity3), opportunities);
+        Mockito.verify(mockOpportunityClient).getAllOpportunities();
     }
 
     @Test
     void getAllAccounts() {
+        Mockito.when(mockAccountClient.getAllAccount()).thenReturn(List.of(account1,account2));
+
+        AccountClient accountClientFromContext = context.getBean(AccountClient.class);
+        List<Account> accounts = accountClientFromContext.getAllAccount();
+
+        assertEquals(List.of(account1,account2), accounts);
+        Mockito.verify(mockAccountClient).getAllAccount();
     }
 
     @Test
