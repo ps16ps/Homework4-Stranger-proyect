@@ -1,7 +1,5 @@
 package com.ironhack.accountservice.controller.dto;
 
-import com.ironhack.accountservice.enums.Industry;
-
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 
