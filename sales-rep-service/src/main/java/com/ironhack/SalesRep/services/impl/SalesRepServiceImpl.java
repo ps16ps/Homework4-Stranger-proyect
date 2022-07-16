@@ -1,7 +1,5 @@
 package com.ironhack.SalesRep.services.impl;
 
-import com.ironhack.SalesRep.controller.impl.SalesRepControllerImpl;
-import com.ironhack.SalesRep.controller.interfaces.SalesRepController;
 import com.ironhack.SalesRep.model.SalesRep;
 import com.ironhack.SalesRep.repository.SalesRepRepository;
 import com.ironhack.SalesRep.services.interfaces.SalesRepService;

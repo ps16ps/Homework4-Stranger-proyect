@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Homework3" />
+        <module name="eureka-service" />
+        <module name="contact-proxy-service" />
+        <module name="sales-rep-service" />
+        <module name="config-service" />
+        <module name="edge-service" />
+        <module name="Lead-service" />
+        <module name="account-service" />
+        <module name="opportunity-service" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="account-service" target="17" />
+      <module name="config-service" target="17" />
+      <module name="contact-proxy-service" target="17" />
+      <module name="edge-service" target="17" />
+      <module name="eureka-service" target="17" />
+      <module name="Homework3" target="17" />
+      <module name="Lead-service" target="17" />
+      <module name="opportunity-service" target="17" />
+      <module name="sales-rep-service" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Homework3" options="-parameters" />
+      <module name="Lead-service" options="-parameters" />
+      <module name="account-service" options="-parameters" />
+      <module name="config-service" options="-parameters" />
+      <module name="contact-proxy-service" options="-parameters" />
+      <module name="edge-service" options="-parameters" />
+      <module name="eureka-service" options="-parameters" />
+      <module name="opportunity-service" options="-parameters" />
+      <module name="sales-rep-service" options="-parameters" />
+    </option>
+  </component>
+</project>
