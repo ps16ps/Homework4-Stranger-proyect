@@ -7,153 +7,42 @@
 	},
 	"item": [
 		{
-			"name": "http://localhost:8085/accounts",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"industry\":\"MEDiCaL\",\r\n    \"employeeCount\":6,\r\n    \"city\":\"asd\",\r\n    \"country\": \"asd\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8085/accounts",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8085",
-					"path": [
-						"accounts"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:8084/opportunities",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\"product\" : \"BOX\",\r\n        \"quantity\" : 3,\r\n        \"decisionMakerId\" : 1,\r\n        \"accountId\" : 1,\r\n        \"salesRepId\" : 1\r\n}\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8084/opportunities",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8084",
-					"path": [
-						"opportunities"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:8083/sales-rep",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\"name\":\"Pepa\"}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8083/sales-rep",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8083",
-					"path": [
-						"sales-rep"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:8081/leads",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Lia\",\r\n    \"phoneNumber\": \"62656256\",\r\n    \"email\":\"lia@gmail.com\",\r\n    \"companyName\": \"aaaa\",\r\n    \"salesRepId\": 1\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8081/leads",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"leads"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:8082/contacts",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Lia\",\r\n    \"phoneNumber\": \"62656256\",\r\n    \"email\":\"lia@gmail.com\",\r\n    \"companyName\": \"aaaa\",\r\n    \"accountId\":1\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8082/contacts",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8082",
-					"path": [
-						"contacts"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "http://localhost:8080/convert/1",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"product\": \"BOX\",\r\n    \"quantity\": 2,\r\n    \"industry\":\"MEDiCaL\",\r\n    \"employeeCount\":12,\r\n    \"city\":\"asd\",\r\n    \"country\": \"asd\"\r\n}",
+					"raw": "{\r\n    \"product\": \"BOX\",\r\n    \"quantity\": 2,\r\n    \"accountId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/convert/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"convert",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/convert/2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"product\": \"BOX\",\r\n    \"quantity\": 2,\r\n    \"industry\": \"MEDICAL\",\r\n    \"employeeCount\":12,\r\n    \"city\":\"Barcelona\",\r\n    \"country\":\"Spain\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -170,6 +59,62 @@
 					"path": [
 						"convert",
 						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/leads",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Lia\",\r\n    \"phoneNumber\": \"62656256\",\r\n    \"email\":\"lia@gmail.com\",\r\n    \"companyName\": \"aaaa\",\r\n    \"salesRepId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/leads",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"leads"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/sales-rep",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"Pepa\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/sales-rep",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sales-rep"
 					]
 				}
 			},
