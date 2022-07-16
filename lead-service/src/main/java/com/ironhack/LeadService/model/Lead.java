@@ -76,33 +76,4 @@ public class Lead {
     public Long getSalesRepId() {
         return salesRepId;
     }
-
-    //Strings to Print
-    public String showLead(){
-        return ("id: " + id + " -> name: " + name);
-    }
-
-    @Override
-    public String toString() {
-        return "=== Lead " + id + " ===\n"+
-                "- name: " + name + "\n"+
-                "- phone number: " + phoneNumber + "\n"+
-                "- email: " + email + "\n"+
-                "- company name: " + companyName + "\n"+
-                "- salesRep id: " + salesRepId +"\n";
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Lead lead = (Lead) o;
-        return name.equals(lead.name) && phoneNumber.equals(lead.phoneNumber) && email.equals(lead.email) &&
-                Objects.equals(companyName, lead.companyName);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, phoneNumber, email, companyName);
-    }
-}
+   }

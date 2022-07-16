@@ -34,13 +34,6 @@ public class SalesRep {
         this.name = name;
     }
 
-    //Strings to Print
-    @Override
-    public String toString() {
-        return "=== SALES REP " + id + " ===\n" +
-                "- name: " + name + "\n";
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -19,6 +19,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -57,7 +58,7 @@ public class LeadControllerImplTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
         assertTrue(mvcResult.getResponse().getContentAsString().contains("Juana"));
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("juanaTacos"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("Mariana"));
     }
 
     @Test
@@ -67,7 +68,7 @@ public class LeadControllerImplTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
         assertTrue(mvcResult.getResponse().getContentAsString().contains("Juana"));
-        assertFalse(mvcResult.getResponse().getContentAsString().contains("uñasMariana"));
+        assertFalse(mvcResult.getResponse().getContentAsString().contains("Mariana"));
     }
 
     @Test
@@ -94,11 +95,20 @@ public class LeadControllerImplTest {
         assertTrue(leadRepository.count()==3);
     }
 
-//    @Test
-//    void delete() throws Exception {
-//        MvcResult mvcResult = mockMvc.perform(delete("/delete/"+lead1.getId())
-//                .andExpect(status().isNoContent())
-//                .andReturn());
-//        assertFalse(leadRepository.existsById(lead1.getId()));
-//    }
+    @Test
+    void deleteLead_CorrectId() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(
+                delete("/leads/"+lead1.getId()))
+                .andExpect(status().isNoContent())
+                .andReturn();
+        assertFalse(leadRepository.existsById(lead1.getId()));
+    }
+
+    @Test
+    void deleteLead_WrongId() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(
+                        delete("/leads/-1"))
+                .andExpect(status().isNotFound())
+                .andReturn();
+    }
 }

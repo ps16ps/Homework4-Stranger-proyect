@@ -2,6 +2,7 @@ package com.ironhack.edgeservice.controller.dto;
 
 
 import javax.validation.constraints.Min;
+import java.util.Objects;
 
 public class OpportunityDTO {
     private String product;
@@ -18,11 +19,6 @@ public class OpportunityDTO {
     public OpportunityDTO() {
     }
 
-    public OpportunityDTO(String product, int quantity) {
-        this.product = product;
-        this.quantity = quantity;
-    }
-
     public OpportunityDTO(String product, int quantity,
                           Long decisionMakerId, Long accountId, Long salesRepId) {
         this.product = product;
@@ -31,7 +27,6 @@ public class OpportunityDTO {
         this.accountId = accountId;
         this.salesRepId = salesRepId;
     }
-
 
     public String getProduct() {
         return product;
@@ -71,5 +66,18 @@ public class OpportunityDTO {
 
     public void setSalesRepId(Long salesRepId) {
         this.salesRepId = salesRepId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OpportunityDTO that = (OpportunityDTO) o;
+        return quantity == that.quantity && product.equals(that.product) && decisionMakerId.equals(that.decisionMakerId) && accountId.equals(that.accountId) && salesRepId.equals(that.salesRepId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(product, quantity, decisionMakerId, accountId, salesRepId);
     }
 }

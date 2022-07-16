@@ -2,6 +2,7 @@ package com.ironhack.edgeservice.controller.dto;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
+import java.util.Objects;
 
 public class AccountDTO {
     private String industry;
@@ -49,5 +50,18 @@ public class AccountDTO {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AccountDTO that = (AccountDTO) o;
+        return employeeCount == that.employeeCount && industry.equals(that.industry) && city.equals(that.city) && country.equals(that.country);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(industry, employeeCount, city, country);
     }
 }

@@ -57,7 +57,8 @@ public class EdgeServiceImpl implements EdgeService {
         return "Lead " + id + " converted";
     }
 
-    public void convertLeadFallback(Long id, ConvertDTO convertDTO){
-        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The server is not working. Try later");
+    public String convertLeadFallback(Long id, ConvertDTO convertDTO, Exception e){
+        throw new RuntimeException(e.getMessage());
+//        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The server is not working. Try later");
     }
 }

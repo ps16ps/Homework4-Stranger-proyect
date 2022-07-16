@@ -84,16 +84,6 @@ public class Lead {
     }
 
     @Override
-    public String toString() {
-        return "=== Lead " + id + " ===\n"+
-                "- name: " + name + "\n"+
-                "- phone number: " + phoneNumber + "\n"+
-                "- email: " + email + "\n"+
-                "- company name: " + companyName + "\n"+
-                "- salesRep id: " + salesRepId +"\n";
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

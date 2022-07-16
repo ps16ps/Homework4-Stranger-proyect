@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Objects;
 
 @Entity
 public class Contact {
@@ -73,5 +74,18 @@ public class Contact {
 
     public void setAccountId(Long accountId) {
         this.accountId = accountId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Contact contact = (Contact) o;
+        return name.equals(contact.name) && phoneNumber.equals(contact.phoneNumber) && email.equals(contact.email) && companyName.equals(contact.companyName) && accountId.equals(contact.accountId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, phoneNumber, email, companyName, accountId);
     }
 }

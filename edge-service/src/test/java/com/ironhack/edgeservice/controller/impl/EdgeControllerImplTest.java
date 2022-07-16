@@ -2,7 +2,9 @@ package com.ironhack.edgeservice.controller.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ironhack.edgeservice.client.*;
+import com.ironhack.edgeservice.controller.dto.AccountDTO;
 import com.ironhack.edgeservice.controller.dto.ConvertDTO;
+import com.ironhack.edgeservice.controller.dto.OpportunityDTO;
 import com.ironhack.edgeservice.controller.dto.StatusDTO;
 import com.ironhack.edgeservice.controller.interfaces.EdgeController;
 import com.ironhack.edgeservice.enums.Industry;
@@ -33,6 +35,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -76,22 +79,31 @@ class EdgeControllerImplTest {
 
         lead1 = new Lead("Steve", "+34 6585698", "steve@gamil.com",
                 "Accenture", 1L);
+        lead1.setId(1L);
         lead2 = new Lead("Jeff", "+34 6899987", "jeff@gamil.com",
                 "Accenture", 2L);
+        lead2.setId(2L);
 
         account1 = new Account(Industry.MEDICAL, 10,"Barcelona", "Spain");
+        account1.setId(1L);
         account2 = new Account(Industry.ECOMMERCE, 20,"Roma", "Italy");
+        account2.setId(2L);
 
-        contact1 = new Contact("Alba","666666999","alba@gmail.com",
-                "albaCompany",1L);
+        contact1 = new Contact("Steve", "+34 6585698", "steve@gamil.com",
+                "Accenture",1L);
+        contact1.setId(1L);
         contact2 = new Contact("Iñaki","666666888","iñaki@gmail.com",
                 "IñakiCompany",2L);
+        contact2.setId(2L);
 
         opportunity1 = new Opportunity(Product.BOX,10,1L,1L,1L);
+        opportunity1.setId(1L);
         opportunity2 = new Opportunity(Product.FLATBED,20,1L,1L,2L);
         opportunity2.setStatus(Status.CLOSED_WON);
+        opportunity2.setId(2L);
         opportunity3 = new Opportunity(Product.FLATBED,30,1L,2L,2L);
         opportunity3.setStatus(Status.CLOSED_LOST);
+        opportunity3.setId(3L);
 
         accountRepository.saveAll(List.of(account1,account2));
         edgeRepository.saveAll(List.of(opportunity1,opportunity2,opportunity3));
@@ -104,216 +116,345 @@ class EdgeControllerImplTest {
     }
 
     @Test
-    void getAllLeads() {
+    void getAllLeads() throws Exception {
         Mockito.when(mockLeadClient.getAllLead()).thenReturn(List.of(lead1,lead2));
 
-        EdgeController edgeController = context.getBean(EdgeController.class);
-        List<Lead> leads = edgeController.getAllLeads();
+        // Llamar con el GET a /leads
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/leads"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("Steve"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("Jeff"));
 
-        assertEquals(List.of(lead1,lead2), leads);
         Mockito.verify(mockLeadClient).getAllLead();
     }
 
     @Test
-    void getAllSalesRep() {
+    void getAllSalesRep() throws Exception {
         Mockito.when(mockSalesRepClient.getAllSalesRep()).thenReturn(List.of(salesRep1,salesRep2));
 
-        EdgeController edgeController = context.getBean(EdgeController.class);
-        List<SalesRep> salesReps = edgeController.getAllSalesRep();
+        // Llamar con el GET a /sales-rep
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/sales-rep"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("Lia"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("Pep"));
 
-        assertEquals(List.of(salesRep1,salesRep2), salesReps);
         Mockito.verify(mockSalesRepClient).getAllSalesRep();
     }
 
     @Test
-    void getAllContacts() {
+    void getAllContacts() throws Exception {
         Mockito.when(mockContactClient.findAll()).thenReturn(List.of(contact1,contact2));
 
-        EdgeController edgeController = context.getBean(EdgeController.class);
-        List<Contact> contacts = edgeController.getAllContacts();
+        // Llamar con el GET a /contacts
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/contacts"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("Steve"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("666666888"));
 
-        assertEquals(List.of(contact1,contact2), contacts);
         Mockito.verify(mockContactClient).findAll();
     }
 
     @Test
-    void getAllOpportunities() {
+    void getAllOpportunities() throws Exception {
         Mockito.when(mockOpportunityClient.getAllOpportunities())
                 .thenReturn(List.of(opportunity1,opportunity2,opportunity3));
 
-        EdgeController edgeController = context.getBean(EdgeController.class);
-        List<Opportunity> opportunities = edgeController.getAllOpportunities();
+        // Llamar con el GET a /opportunities
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/opportunities"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("BOX"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("FLATBED"));
 
-        assertEquals(List.of(opportunity1,opportunity2,opportunity3), opportunities);
         Mockito.verify(mockOpportunityClient).getAllOpportunities();
     }
 
     @Test
-    void getAllAccounts() {
+    void getAllAccounts() throws Exception {
         Mockito.when(mockAccountClient.getAllAccount()).thenReturn(List.of(account1,account2));
 
-        EdgeController edgeController = context.getBean(EdgeController.class);
-        List<Account> accounts = edgeController.getAllAccounts();
+        // Llamar con el GET a /accounts
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/accounts"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("Barcelona"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("Roma"));
 
-        assertEquals(List.of(account1,account2), accounts);
         Mockito.verify(mockAccountClient).getAllAccount();
     }
 
     @Test
-    void getLeadsById() {
+    void getLeadsById() throws Exception {
         Mockito.when(mockLeadClient.getLeadById(lead1.getId())).thenReturn(lead1);
 
-        EdgeController edgeController = context.getBean(EdgeController.class);
-        Lead lead = edgeController.getLeadsById(lead1.getId());
+        // Llamar con el GET a /leads/{id}
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/leads/"+lead1.getId()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("Steve"));
+        assertFalse(mvcResult.getResponse().getContentAsString().contains("Jeff"));
 
-        assertEquals(lead1, lead);
         Mockito.verify(mockLeadClient).getLeadById(lead1.getId());
     }
 
     @Test
-    void getSalesRepsById() {
+    void getSalesRepsById() throws Exception {
         Mockito.when(mockSalesRepClient.getSalesRepById(salesRep1.getId())).thenReturn(salesRep1);
 
-        EdgeController edgeController = context.getBean(EdgeController.class);
-        SalesRep salesRep = edgeController.getSalesRepsById(salesRep1.getId());
+        // Llamar con el GET a /sales-rep/{id}
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/sales-rep/"+salesRep1.getId()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("Lia"));
+        assertFalse(mvcResult.getResponse().getContentAsString().contains("Pep"));
 
-        assertEquals(salesRep1, salesRep);
         Mockito.verify(mockSalesRepClient).getSalesRepById(salesRep1.getId());
     }
 
     @Test
-    void getContactsById() {
+    void getContactsById() throws Exception {
         Mockito.when(mockContactClient.findById(contact1.getId())).thenReturn(contact1);
 
-        EdgeController edgeController = context.getBean(EdgeController.class);
-        Contact contact = edgeController.getContactsById(contact1.getId());
+        // Llamar con el GET a /contacts/{id}
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/contacts/"+contact1.getId()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("Steve"));
+        assertFalse(mvcResult.getResponse().getContentAsString().contains("Iñaki"));
 
-        assertEquals(contact1, contact);
         Mockito.verify(mockContactClient).findById(contact1.getId());
     }
 
     @Test
-    void getOpportunitiesById() {
+    void getOpportunitiesById() throws Exception {
         Mockito.when(mockOpportunityClient.getOpportunityById(opportunity1.getId()))
                 .thenReturn(opportunity1);
 
-        EdgeController edgeController = context.getBean(EdgeController.class);
-        Opportunity opportunity = edgeController.getOpportunitiesById(opportunity1.getId());
+        // Llamar con el GET a /opportunities/{id}
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/opportunities/"+opportunity1.getId()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("BOX"));
+        assertFalse(mvcResult.getResponse().getContentAsString().contains("FLATBED"));
 
-        assertEquals(opportunity1, opportunity);
         Mockito.verify(mockOpportunityClient).getOpportunityById(opportunity1.getId());
     }
 
     @Test
-    void getAccountsById() {
+    void getAccountsById() throws Exception {
         Mockito.when(mockAccountClient.getAccountById(account1.getId())).thenReturn(account1);
 
-        EdgeController edgeController = context.getBean(EdgeController.class);
-        Account account = edgeController.getAccountsById(account1.getId());
-
-        assertEquals(account1, account);
+        // Llamar con el GET a /accounts/{id}
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/accounts/"+account1.getId()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("Barcelona"));
+        assertFalse(mvcResult.getResponse().getContentAsString().contains("Roma"));
         Mockito.verify(mockAccountClient).getAccountById(account1.getId());
     }
 
     @Test
-    void getAvgQuantity() {
+    void getAvgQuantity() throws Exception {
         Mockito.when(mockOpportunityClient.getAvgQuantity())
                 .thenReturn(20.0);
 
-        EdgeController edgeController = context.getBean(EdgeController.class);
-        Double avg = edgeController.getAvgQuantity();
+        // Llamar con el GET a /opportunity-quantity/avg
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/opportunity-quantity/avg"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
+
         Double mean = ((double) opportunity1.getQuantity() + (double)  opportunity2.getQuantity()
                 + (double) opportunity3.getQuantity())/3;
+        assertTrue(mvcResult.getResponse().getContentAsString().contains(mean.toString()));
 
-        assertEquals(mean, avg);
         Mockito.verify(mockOpportunityClient).getAvgQuantity();
     }
 
     @Test
-    void getMaxQuantity() {
+    void getMaxQuantity() throws Exception {
         Mockito.when(mockOpportunityClient.getMaxQuantity())
                 .thenReturn(30);
 
-        EdgeController edgeController = context.getBean(EdgeController.class);
-        int max = edgeController.getMaxQuantity();
+        // Llamar con el GET a /opportunity-quantity/max
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/opportunity-quantity/max"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
 
-        assertEquals(opportunity3.getQuantity(), max);
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("30"));
+
         Mockito.verify(mockOpportunityClient).getMaxQuantity();
     }
 
     @Test
-    void getMinQuantity() {
+    void getMinQuantity() throws Exception {
         Mockito.when(mockOpportunityClient.getMinQuantity())
                 .thenReturn(10);
 
-        EdgeController edgeController = context.getBean(EdgeController.class);
-        int min = edgeController.getMinQuantity();
+        // Llamar con el GET a /opportunity-quantity/min
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/opportunity-quantity/min"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
 
-        assertEquals(opportunity1.getQuantity(), min);
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("10"));
+
         Mockito.verify(mockOpportunityClient).getMinQuantity();
     }
 
     @Test
-    void getMedQuantity() {
+    void getMedQuantity() throws Exception {
         Mockito.when(mockOpportunityClient.getMedQuantity())
                 .thenReturn(20.0);
 
-        EdgeController edgeController = context.getBean(EdgeController.class);
-        double med = edgeController.getMedQuantity();
+        // Llamar con el GET a /opportunity-quantity/med
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/opportunity-quantity/med"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
 
-        assertEquals((double) opportunity2.getQuantity(), med);
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("20.0"));
+
         Mockito.verify(mockOpportunityClient).getMedQuantity();
     }
 
     @Test
-    void getAllOpportunitiesByProduct() {
+    void getAllOpportunitiesByProduct() throws Exception {
         List<Object[]> resultMock = List.of(new Object[]{"BOX", 1}, new Object[]{"FLATBED", 2});
         Mockito.when(mockOpportunityClient.getAllOpportunitiesByProduct())
                 .thenReturn(resultMock);
 
-        EdgeController edgeController = context.getBean(EdgeController.class);
-        List<Object[]> result = edgeController.getAllOpportunitiesByProduct();
+        // Llamar con el GET a /opportunity-products
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/opportunity-products"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
 
-        assertEquals(resultMock, result);
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("BOX"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("1"));
+
         Mockito.verify(mockOpportunityClient).getAllOpportunitiesByProduct();
     }
 
     @Test
-    void getOpportunitiesClosedWonByProduct() {
+    void getOpportunitiesClosedWonByProduct() throws Exception {
         List<Object[]> resultMock = List.of(new Object[][]{new Object[]{"FLATBED", 1}});
         Mockito.when(mockOpportunityClient.getOpportunitiesClosedWonByProduct())
                 .thenReturn(resultMock);
 
-        EdgeController edgeController = context.getBean(EdgeController.class);
-        List<Object[]> result = edgeController.getOpportunitiesClosedWonByProduct();
+        // Llamar con el GET a /opportunity-products/closed-won
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/opportunity-products/closed-won"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
 
-        assertEquals(resultMock, result);
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("FLATBED"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("1"));
+
         Mockito.verify(mockOpportunityClient).getOpportunitiesClosedWonByProduct();
     }
 
     @Test
-    void getOpportunitiesClosedLostByProduct() {
+    void getOpportunitiesClosedLostByProduct() throws Exception {
         List<Object[]> resultMock = List.of(new Object[][]{new Object[]{"FLATBED", 1}});
         Mockito.when(mockOpportunityClient.getOpportunitiesClosedLostByProduct())
                 .thenReturn(resultMock);
 
-        EdgeController edgeController = context.getBean(EdgeController.class);
-        List<Object[]> result = edgeController.getOpportunitiesClosedLostByProduct();
+        // Llamar con el GET a /opportunity-products/closed-lost
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/opportunity-products/closed-lost"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
 
-        assertEquals(resultMock, result);
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("FLATBED"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("1"));
+
         Mockito.verify(mockOpportunityClient).getOpportunitiesClosedLostByProduct();
     }
 
     @Test
-    void getOpportunitiesOpenByProduct() {
+    void getOpportunitiesOpenByProduct() throws Exception {
         List<Object[]> resultMock = List.of(new Object[][]{new Object[]{"BOX", 1}});
         Mockito.when(mockOpportunityClient.getOpportunitiesClosedWonByProduct())
                 .thenReturn(resultMock);
 
-        EdgeController edgeController = context.getBean(EdgeController.class);
-        List<Object[]> result = edgeController.getOpportunitiesClosedWonByProduct();
+        // Llamar con el GET a /opportunity-products/open
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/opportunity-products/open"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
 
-        assertEquals(resultMock, result);
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("BOX"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("1"));
+
         Mockito.verify(mockOpportunityClient).getOpportunitiesClosedWonByProduct();
     }
 
@@ -503,156 +644,309 @@ class EdgeControllerImplTest {
     }
 
     @Test
-    void getAvgAccount() {
+    void getAvgAccount() throws Exception {
         Mockito.when(mockAccountClient.getAvgEmployeeCount())
                 .thenReturn(15.0);
 
-        EdgeController edgeController = context.getBean(EdgeController.class);
-        double avg = edgeController.getAvgAccount();
+        // Llamar con el GET a /account-employee/avg
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/account-employee/avg"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
 
-        assertEquals(15.0, avg);
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("15.0"));
+
         Mockito.verify(mockAccountClient).getAvgEmployeeCount();
     }
 
     @Test
-    void getMaxAccount() {
+    void getMaxAccount() throws Exception {
         Mockito.when(mockAccountClient.getMaxEmployeeCount())
                 .thenReturn(20);
 
-        EdgeController edgeController = context.getBean(EdgeController.class);
-        int max = edgeController.getMaxAccount();
+        // Llamar con el GET a /account-employee/max
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/account-employee/max"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
 
-        assertEquals(account2.getEmployeeCount(), max);
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("20"));
+
         Mockito.verify(mockAccountClient).getMaxEmployeeCount();
     }
 
     @Test
-    void getMinAccount() {
+    void getMinAccount() throws Exception {
         Mockito.when(mockAccountClient.getMinEmployeeCount())
                 .thenReturn(10);
 
-        EdgeController edgeController = context.getBean(EdgeController.class);
-        int min = edgeController.getMinAccount();
+        // Llamar con el GET a /account-employee/min
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/account-employee/min"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
 
-        assertEquals(account1.getEmployeeCount(), min);
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("10"));
+
         Mockito.verify(mockAccountClient).getMinEmployeeCount();
     }
 
     @Test
-    void getMedAccount() {
+    void getMedAccount() throws Exception {
         Mockito.when(mockAccountClient.getMedEmployeeCount())
                 .thenReturn(15.0);
 
-        EdgeController edgeController = context.getBean(EdgeController.class);
-        double med = edgeController.getMedAccount();
+        // Llamar con el GET a /account-employee/med
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/account-employee/med"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
 
-        assertEquals(15.0, med);
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("15.0"));
+
         Mockito.verify(mockAccountClient).getMedEmployeeCount();
     }
 
     @Test
-    void getOpportunitiesBySalesRep() {
+    void getOpportunitiesBySalesRep() throws Exception {
         List<Object[]> resultMock = List.of(new Object[]{1L, 1}, new Object[]{2L,2});
         Mockito.when(mockOpportunityClient.getOpportunitiesBySalesRep())
                 .thenReturn(resultMock);
 
-        EdgeController edgeController = context.getBean(EdgeController.class);
-        List<Object[]> result = edgeController.getOpportunitiesBySalesRep();
+        // Llamar con el GET a /opportunity-sales-rep
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/opportunity-sales-rep"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
 
-        assertEquals(resultMock, result);
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("1"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("2"));
+
         Mockito.verify(mockOpportunityClient).getOpportunitiesBySalesRep();
     }
 
     @Test
-    void getOpportunitiesClosedWonBySalesRep() {
+    void getOpportunitiesClosedWonBySalesRep() throws Exception {
         List<Object[]> resultMock = List.of(new Object[][]{new Object[]{2L, 1}});
         Mockito.when(mockOpportunityClient.getOpportunitiesClosedWonBySalesRep())
                 .thenReturn(resultMock);
 
-        EdgeController edgeController = context.getBean(EdgeController.class);
-        List<Object[]> result = edgeController.getOpportunitiesClosedWonBySalesRep();
+        // Llamar con el GET a /opportunity-sales-rep/closed-won
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/opportunity-sales-rep/closed-won"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
 
-        assertEquals(resultMock, result);
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("2"));
+
         Mockito.verify(mockOpportunityClient).getOpportunitiesClosedWonBySalesRep();
     }
 
     @Test
-    void getOpportunitiesClosedLostBySalesRep() {
+    void getOpportunitiesClosedLostBySalesRep() throws Exception {
         List<Object[]> resultMock = List.of(new Object[][]{new Object[]{2L, 1}});
         Mockito.when(mockOpportunityClient.getOpportunitiesClosedLostBySalesRep())
                 .thenReturn(resultMock);
 
-        EdgeController edgeController = context.getBean(EdgeController.class);
-        List<Object[]> result = edgeController.getOpportunitiesClosedLostBySalesRep();
+        // Llamar con el GET a /opportunity-sales-rep/closed-lost
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/opportunity-sales-rep/closed-lost"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
 
-        assertEquals(resultMock, result);
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("2"));
+
         Mockito.verify(mockOpportunityClient).getOpportunitiesClosedLostBySalesRep();
     }
 
     @Test
-    void getOpportunitiesOpenBySalesRep() {
+    void getOpportunitiesOpenBySalesRep() throws Exception {
         List<Object[]> resultMock = List.of(new Object[][]{new Object[]{1L, 1}});
         Mockito.when(mockOpportunityClient.getOpportunitiesOpenBySalesRep())
                 .thenReturn(resultMock);
 
-        EdgeController edgeController = context.getBean(EdgeController.class);
-        List<Object[]> result = edgeController.getOpportunitiesOpenBySalesRep();
+        // Llamar con el GET a /opportunity-sales-rep/open
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/opportunity-sales-rep/open"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
 
-        assertEquals(resultMock, result);
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("1"));
+        assertFalse(mvcResult.getResponse().getContentAsString().contains("2"));
+
         Mockito.verify(mockOpportunityClient).getOpportunitiesOpenBySalesRep();
     }
 
     @Test
-    void postLead() {
+    void postLead() throws Exception {
         Mockito.when(mockLeadClient.postLead(lead1))
                 .thenReturn(lead1);
 
-        EdgeController edgeController = context.getBean(EdgeController.class);
-        Lead result = edgeController.postLead(lead1);
+        // Preparo la lead que voy a insertar
+        String body = objectMapper.writeValueAsString(lead1);
 
-        assertEquals(lead1, result);
+        // Hago la llamada HTTP
+        MvcResult mvcResult = mockMvc.perform(
+                        post("/leads")
+                                .content(body)
+                                .contentType(MediaType.APPLICATION_JSON)
+                ).andExpect(status().isCreated())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+        // Compruebo el formato de la respuesta
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("Steve"));
+        assertFalse(mvcResult.getResponse().getContentAsString().contains("Jeff"));
+
         Mockito.verify(mockLeadClient).postLead(lead1);
     }
 
     @Test
-    void postSalesRep() {
+    void postSalesRep() throws Exception {
         Mockito.when(mockSalesRepClient.postSalesRep(salesRep1))
                 .thenReturn(salesRep1);
 
-        EdgeController edgeController = context.getBean(EdgeController.class);
-        SalesRep result = edgeController.postSalesRep(salesRep1);
+        // Preparo la sales-rep que voy a insertar
+        String body = objectMapper.writeValueAsString(salesRep1);
 
-        assertEquals(salesRep1, result);
+        // Hago la llamada HTTP
+        MvcResult mvcResult = mockMvc.perform(
+                        post("/sales-rep")
+                                .content(body)
+                                .contentType(MediaType.APPLICATION_JSON)
+                ).andExpect(status().isCreated())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+        // Compruebo el formato de la respuesta
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("Lia"));
+        assertFalse(mvcResult.getResponse().getContentAsString().contains("Pep"));
+
         Mockito.verify(mockSalesRepClient).postSalesRep(salesRep1);
     }
 
-//    @Test
-//    void convertLead() {
-//        Mockito.when(mockLeadClient.postLead(lead1))
-//                .thenReturn(lead1);
-//
-//        ConvertDTO convertDTO = new ConvertDTO("BOX",15,1L);
-//
-//        EdgeController edgeController = context.getBean(EdgeController.class);
-//        String result = edgeController.convertLead(lead1.getId(),convertDTO);
-//
-//        assertEquals(lead1, result);
-//        Mockito.verify(mockLeadClient).postLead(lead1);
-//    }
+    @Test
+    void convertLead_ExistingAccount() throws Exception {
+        ConvertDTO convertDTO = new ConvertDTO("BOX",10,1L);
+        OpportunityDTO opportunityDTO = new OpportunityDTO(convertDTO.getProduct(), convertDTO.getQuantity(),
+                contact1.getId(),account1.getId(), lead1.getSalesRepId());
 
-//    @Test
-//    void closeLostOpportunity() {
-//        doCallRealMethod().when(mockOpportunityClient.updateStatus(opportunity1.getId(), new StatusDTO("CLOSED_LOST")))
-////                .thenCallRealMethod(opportunity1.setStatus(Status.CLOSED_LOST));
-//
-//        OpportunityClient opportunityClientFromContext = context.getBean(OpportunityClient.class);
-//        List<Object[]> result = opportunityClientFromContext.getOpportunitiesClosedLostBySalesRep();
-//
-//        assertEquals(resultMock, result);
-//        Mockito.verify(mockOpportunityClient).getOpportunitiesClosedLostBySalesRep();
-//    }
-//
-//    @Test
-//    void closeWonOpportunity() {
-//    }
+        Mockito.when(mockLeadClient.getLeadById(lead1.getId()))
+                .thenReturn(lead1);
+        Mockito.doNothing().when(mockLeadClient).delete(lead1.getId());
+        Mockito.when(mockAccountClient.getAccountById(convertDTO.getAccountId()))
+                .thenReturn(account1);
+        Mockito.when(mockContactClient.saveContact(contact1))
+                .thenReturn(contact1);
+        Mockito.when(mockOpportunityClient.createOpportunity(opportunityDTO))
+                .thenReturn(opportunity1);
+
+        // Preparo la convertDTO que voy a insertar
+        String body = objectMapper.writeValueAsString(convertDTO);
+
+        // Hago la llamada HTTP
+        MvcResult mvcResult = mockMvc.perform(
+                        post("/convert/"+lead1.getId())
+                                .content(body)
+                                .contentType(MediaType.APPLICATION_JSON)
+                ).andExpect(status().isCreated())
+                .andReturn();
+        // Compruebo el formato de la respuesta
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("Lead " + lead1.getId() + " converted"));
+
+        Mockito.verify(mockLeadClient).getLeadById(lead1.getId());
+        Mockito.verify(mockLeadClient).delete(lead1.getId());
+        Mockito.verify(mockAccountClient).getAccountById(convertDTO.getAccountId());
+        Mockito.verify(mockContactClient).saveContact(contact1);
+        Mockito.verify(mockOpportunityClient).createOpportunity(opportunityDTO);
+    }
+
+    @Test
+    void convertLead_NewAccount() throws Exception {
+        ConvertDTO convertDTO = new ConvertDTO("BOX",10,"MEDICAL",10,
+                "Barcelona","Spain");
+        AccountDTO accountDTO = new AccountDTO(convertDTO.getIndustry(), convertDTO.getEmployeeCount(),
+                convertDTO.getCity(), convertDTO.getCountry());
+        OpportunityDTO opportunityDTO = new OpportunityDTO(convertDTO.getProduct(), convertDTO.getQuantity(),
+                contact1.getId(),account1.getId(), lead1.getSalesRepId());
+
+        Mockito.when(mockLeadClient.getLeadById(lead1.getId()))
+                .thenReturn(lead1);
+        Mockito.doNothing().when(mockLeadClient).delete(lead1.getId());
+        Mockito.when(mockAccountClient.createAccount(accountDTO))
+                .thenReturn(account1);
+        Mockito.when(mockContactClient.saveContact(contact1))
+                .thenReturn(contact1);
+        Mockito.when(mockOpportunityClient.createOpportunity(opportunityDTO))
+                .thenReturn(opportunity1);
+
+        // Preparo la convertDTO que voy a insertar
+        String body = objectMapper.writeValueAsString(convertDTO);
+
+        // Hago la llamada HTTP
+        MvcResult mvcResult = mockMvc.perform(
+                        post("/convert/"+lead1.getId())
+                                .content(body)
+                                .contentType(MediaType.APPLICATION_JSON)
+                ).andExpect(status().isCreated())
+                .andReturn();
+        // Compruebo el formato de la respuesta
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("Lead " + lead1.getId() + " converted"));
+
+        Mockito.verify(mockLeadClient).getLeadById(lead1.getId());
+        Mockito.verify(mockLeadClient).delete(lead1.getId());
+        Mockito.verify(mockAccountClient).createAccount(accountDTO);
+        Mockito.verify(mockContactClient).saveContact(contact1);
+        Mockito.verify(mockOpportunityClient).createOpportunity(opportunityDTO);
+    }
+
+    @Test
+    void closeLostOpportunity() {
+        Mockito.doAnswer(inputs -> {
+            opportunity1.setStatus(Status.CLOSED_LOST);
+            return null;
+        }).when(mockOpportunityClient).updateStatus(opportunity1.getId(), new StatusDTO("CLOSED_LOST"));
+
+        EdgeController edgeController = context.getBean(EdgeController.class);
+        edgeController.closeLostOpportunity(opportunity1.getId());
+
+        assertEquals(Status.CLOSED_LOST, opportunity1.getStatus());
+        Mockito.verify(mockOpportunityClient).updateStatus(opportunity1.getId(), new StatusDTO("CLOSED_LOST"));
+    }
+
+    @Test
+    void closeWonOpportunity() {
+        Mockito.doAnswer(opportunity1Id -> {
+            opportunity1.setStatus(Status.CLOSED_WON);
+            return null;
+        }).when(mockOpportunityClient).updateStatus(opportunity1.getId(), new StatusDTO("CLOSED_WON"));
+
+        EdgeController edgeController = context.getBean(EdgeController.class);
+        edgeController.closeWonOpportunity(opportunity1.getId());
+
+        assertEquals(Status.CLOSED_WON, opportunity1.getStatus());
+        Mockito.verify(mockOpportunityClient).updateStatus(opportunity1.getId(), new StatusDTO("CLOSED_WON"));
+    }
 }
