@@ -101,7 +101,31 @@ public class EdgeControllerImpl implements EdgeController {
         return accountClient.getAccountById(id);
     }
 
-    //All Opportunity Get Requests in opportunity client
+    //Get QUERYs
+    @GetMapping("/account-employee/avg")
+    @ResponseStatus(HttpStatus.OK)
+    public double getAvgAccount(){
+        return accountClient.getAvgEmployeeCount();
+    }
+
+    @GetMapping("/account-employee/max")
+    @ResponseStatus(HttpStatus.OK)
+    public int getMaxAccount(){
+        return accountClient.getMaxEmployeeCount();
+    }
+
+    @GetMapping("/account-employee/min")
+    @ResponseStatus(HttpStatus.OK)
+    public int getMinAccount(){
+        return accountClient.getMinEmployeeCount();
+    }
+
+    @GetMapping("/account-employee/med")
+    @ResponseStatus(HttpStatus.OK)
+    public double getMedAccount(){
+        return accountClient.getMedEmployeeCount();
+    }
+
     @GetMapping("/opportunity-quantity/avg")
     @ResponseStatus(HttpStatus.OK)
     public double getAvgQuantity(){
@@ -169,12 +193,76 @@ public class EdgeControllerImpl implements EdgeController {
         return opportunityClient.getOpportunitiesOpenBySalesRep();
     }
 
-    // GET QUERYs : agregar las del EdgeRepo
-
-    @GetMapping("/opportunities/country")
+    @GetMapping("/opportunities-country")
     @ResponseStatus(HttpStatus.OK)
-    public List<Object[]> findOpportunitiesByCountry(){
+    public List<Object[]> getOpportunitiesByCountry(){
         return edgeRepository.findOpportunitiesByCountry();
+    }
+
+    @GetMapping("/opportunities-country/closed-won")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Object[]> getClosedWonOpportunitiesByCountry(){
+        return edgeRepository.findOpportunitiesClosedWonByCountry();
+    }
+
+    @GetMapping("/opportunities-country/closed-lost")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Object[]> getClosedLostOpportunitiesByCountry(){
+        return edgeRepository.findOpportunitiesClosedLostByCountry();
+    }
+
+    @GetMapping("/opportunities-country/open")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Object[]> getOpenOpportunitiesByCountry(){
+        return edgeRepository.findOpportunitiesOpenByCountry();
+    }
+
+    @GetMapping("/opportunities-city")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Object[]> getOpportunitiesByCity(){
+        return edgeRepository.findOpportunitiesByCity();
+    }
+
+    @GetMapping("/opportunities-city/closed-won")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Object[]> getClosedWonOpportunitiesByCity(){
+        return edgeRepository.findOpportunitiesClosedWonByCity();
+    }
+
+    @GetMapping("/opportunities-city/closed-lost")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Object[]> getClosedLostOpportunitiesByCity(){
+        return edgeRepository.findOpportunitiesClosedLostByCity();
+    }
+
+    @GetMapping("/opportunities-city/open")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Object[]> getOpenOpportunitiesByCity(){
+        return edgeRepository.findOpportunitiesOpenByCity();
+    }
+
+    @GetMapping("/opportunities-industry")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Object[]> getOpportunitiesByIndustry(){
+        return edgeRepository.findOpportunitiesByIndustry();
+    }
+
+    @GetMapping("/opportunities-industry/closed-won")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Object[]> getClosedWonOpportunitiesByIndustry(){
+        return edgeRepository.findOpportunitiesClosedWonByIndustry();
+    }
+
+    @GetMapping("/opportunities-industry/closed-lost")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Object[]> getClosedLostOpportunitiesByIndustry(){
+        return edgeRepository.findOpportunitiesClosedLostByIndustry();
+    }
+
+    @GetMapping("/opportunities-industry/open")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Object[]> getOpenOpportunitiesByIndustry(){
+        return edgeRepository.findOpportunitiesOpenByIndustry();
     }
 
     //Posts : new salesRep, new lead, convert lead

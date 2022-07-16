@@ -70,18 +70,4 @@ public class Account{
     public void setCountry(String country) {
         this.country = country;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Account account = (Account) o;
-        return employeeCount == account.employeeCount && industry == account.industry && city.equals(account.city) &&
-                country.equals(account.country);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(industry, employeeCount, city, country);
-    }
-}
+   }
