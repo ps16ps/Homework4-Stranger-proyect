@@ -44,10 +44,6 @@ public class Opportunity {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Product getProduct() {
         return product;
     }
@@ -96,30 +92,4 @@ public class Opportunity {
         this.salesRepId = salesRepId;
     }
 
-    @Override
-    public String toString() {
-        return "=== Opportunity " + id + " ===\n"+
-                "- product: " + product + "\n"+
-                "- trucks quantity: " + quantity + "\n"+
-                "- decision maker: " + decisionMakerId +
-                "- status: " + status + "\n"+
-                "- salesRep id: " + salesRepId +"\n";
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Opportunity that = (Opportunity) o;
-        return quantity == that.quantity && Objects.equals(id, that.id)
-                && product == that.product && Objects.equals(decisionMakerId, that.decisionMakerId)
-                && Objects.equals(status, that.status) && Objects.equals(accountId, that.accountId)
-                && Objects.equals(salesRepId, that.salesRepId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, product, quantity, decisionMakerId, status, accountId, salesRepId);
-    }
 }

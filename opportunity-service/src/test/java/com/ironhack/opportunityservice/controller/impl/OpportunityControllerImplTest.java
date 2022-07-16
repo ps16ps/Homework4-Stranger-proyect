@@ -1,7 +1,9 @@
 package com.ironhack.opportunityservice.controller.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ironhack.opportunityservice.controller.dto.OpportunityDTO;
+import com.ironhack.opportunityservice.controller.dto.StatusDTO;
 import com.ironhack.opportunityservice.enums.Product;
 import com.ironhack.opportunityservice.enums.Status;
 import com.ironhack.opportunityservice.model.Opportunity;
@@ -17,10 +19,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.List;
+import java.util.Optional;
 
+import static com.ironhack.opportunityservice.enums.Status.CLOSED_WON;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -40,8 +43,8 @@ class OpportunityControllerImplTest {
     @BeforeEach
     void setUp() {
         opportunity1 = new Opportunity(Product.BOX,10,1L,1L,1L);
-        opportunity2 = new Opportunity(Product.FLATBED,20,1L,1L,2L);
-        opportunity2.setStatus(Status.CLOSED_WON);
+        opportunity2 = new Opportunity(Product.FLATBED,20,1L,1L,3L);
+        opportunity2.setStatus(CLOSED_WON);
         opportunity3 = new Opportunity(Product.FLATBED,30,1L,1L,2L);
         opportunity3.setStatus(Status.CLOSED_LOST);
 
@@ -161,10 +164,6 @@ class OpportunityControllerImplTest {
 
     @Test
     void getOpportunitiesClosedWonByProduct() throws Exception {
-        // Llamar con el GET a /opportunity-products/closed-won
-        // Comprobamos que el status code de  respuesta sea OK
-        // Comprobamos que la respuesta esté en formato JSON
-        // Comprobamos que el resultado es el que toca
         MvcResult mvcResult = mockMvc.perform(get("/opportunity-products/closed-won"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -175,27 +174,68 @@ class OpportunityControllerImplTest {
     }
 
     @Test
-    void getOpportunitiesClosedLostByProduct() {
+    void getOpportunitiesClosedLostByProduct() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(get("/opportunity-products/closed-lost"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
+        assertFalse(mvcResult.getResponse().getContentAsString().contains("BOX"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("FLATBED"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("1"));
     }
 
     @Test
-    void getOpportunitiesOpenByProduct() {
+    void getOpportunitiesOpenByProduct() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(get("/opportunity-products/open"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+        assertFalse(mvcResult.getResponse().getContentAsString().contains("FLATBED"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("BOX"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("1"));
     }
 
     @Test
-    void getOpportunitiesBySalesRep() {
+    void getOpportunitiesBySalesRep() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(get("/opportunity-sales-rep"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("3"));
+
     }
 
     @Test
-    void getOpportunitiesClosedWonBySalesRep() {
+    void getOpportunitiesClosedWonBySalesRep() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(get("/opportunity-products/closed-won"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("1"));
+
+    }
+
+
+    @Test
+    void getOpportunitiesClosedLostBySalesRep() throws Exception {
+            MvcResult mvcResult = mockMvc.perform(get("/opportunity-sales-rep/closed-lost"))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    .andReturn();
+            assertTrue(mvcResult.getResponse().getContentAsString().contains("1"));
+
     }
 
     @Test
-    void getOpportunitiesClosedLostBySalesRep() {
-    }
+    void getOpportunitiesOpenBySalesRep() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(get("/opportunity-sales-rep/open"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("1"));
+        assertFalse(mvcResult.getResponse().getContentAsString().contains("2"));
 
-    @Test
-    void getOpportunitiesOpenBySalesRep() {
+
     }
 
     @Test
@@ -218,14 +258,27 @@ class OpportunityControllerImplTest {
                 ).andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
-        // Compruebo el formato de la respuesta
         assertTrue(mvcResult.getResponse().getContentAsString().contains("BOX"));
         assertTrue(mvcResult.getResponse().getContentAsString().contains("15"));
-        // Compruebo que se haya guardado en la base de datos AKA compruebo que el size haya aumentado
         assertTrue(opportunityRepository.count()==4);
     }
 
     @Test
-    void updateStatus() {
+    void updateStatus() throws Exception {
+        StatusDTO statusDTO = new StatusDTO("CLOSED_WON");
+       String body = objectMapper.writeValueAsString(statusDTO);
+
+        MvcResult mvcResult  = mockMvc.perform(
+                put("/opportunities/" + opportunity1.getId() + "/update-status")
+                        .content(body)
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isNoContent())
+                .andReturn();
+
+        Optional<Opportunity> optionalOpportunity = opportunityRepository.findById(opportunity1.getId());
+        assertTrue(optionalOpportunity.isPresent());
+        assertEquals(CLOSED_WON, optionalOpportunity.get().getStatus());
+
     }
 }
