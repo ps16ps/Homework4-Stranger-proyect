@@ -13,7 +13,6 @@ import com.ironhack.edgeservice.enums.Status;
 import com.ironhack.edgeservice.model.*;
 import com.ironhack.edgeservice.repository.AccountRepository;
 import com.ironhack.edgeservice.repository.EdgeRepository;
-import com.ironhack.edgeservice.service.interfaces.EdgeService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,8 +31,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.doCallRealMethod;
-import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -111,8 +108,8 @@ class EdgeControllerImplTest {
 
     @AfterEach
     void tearDown() {
-        edgeRepository.deleteAll();
-        accountRepository.deleteAll();
+//        edgeRepository.deleteAll();
+//        accountRepository.deleteAll();
     }
 
     @Test
@@ -310,9 +307,7 @@ class EdgeControllerImplTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn(); //Para cerrar la petición
 
-        Double mean = ((double) opportunity1.getQuantity() + (double)  opportunity2.getQuantity()
-                + (double) opportunity3.getQuantity())/3;
-        assertTrue(mvcResult.getResponse().getContentAsString().contains(mean.toString()));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("20.0"));
 
         Mockito.verify(mockOpportunityClient).getAvgQuantity();
     }
@@ -440,7 +435,7 @@ class EdgeControllerImplTest {
     @Test
     void getOpportunitiesOpenByProduct() throws Exception {
         List<Object[]> resultMock = List.of(new Object[][]{new Object[]{"BOX", 1}});
-        Mockito.when(mockOpportunityClient.getOpportunitiesClosedWonByProduct())
+        Mockito.when(mockOpportunityClient.getOpportunitiesOpenByProduct())
                 .thenReturn(resultMock);
 
         // Llamar con el GET a /opportunity-products/open
@@ -455,7 +450,7 @@ class EdgeControllerImplTest {
         assertTrue(mvcResult.getResponse().getContentAsString().contains("BOX"));
         assertTrue(mvcResult.getResponse().getContentAsString().contains("1"));
 
-        Mockito.verify(mockOpportunityClient).getOpportunitiesClosedWonByProduct();
+        Mockito.verify(mockOpportunityClient).getOpportunitiesOpenByProduct();
     }
 
 
@@ -592,7 +587,7 @@ class EdgeControllerImplTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn(); //Para cerrar la petición
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("FLATBED"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("ECOMMERCE"));
         assertTrue(mvcResult.getResponse().getContentAsString().contains("1"));
         assertTrue(mvcResult.getResponse().getContentAsString().contains("MEDICAL"));
         assertTrue(mvcResult.getResponse().getContentAsString().contains("2"));
@@ -623,7 +618,7 @@ class EdgeControllerImplTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn(); //Para cerrar la petición
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("FLATBED"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("ECOMMERCE"));
         assertFalse(mvcResult.getResponse().getContentAsString().contains("MEDICAL"));
         assertTrue(mvcResult.getResponse().getContentAsString().contains("1"));
     }
