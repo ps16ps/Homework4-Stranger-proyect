@@ -17,7 +17,6 @@ public class OpportunityDTO {
 
     public OpportunityDTO() {
     }
-
     public OpportunityDTO(String product, int quantity, Long decisionMakerId, Long accountId, Long salesRepId) {
         this.product = product;
         this.quantity = quantity;
