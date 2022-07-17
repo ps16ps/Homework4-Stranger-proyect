@@ -178,6 +178,7 @@ public class EdgeControllerImpl implements EdgeController {
     public List <Object[]> getOpportunitiesBySalesRep(){
         return opportunityClient.getOpportunitiesBySalesRep();
     };
+
     @GetMapping("/opportunity-sales-rep/closed-won")
     public List <Object[]> getOpportunitiesClosedWonBySalesRep(){
         return opportunityClient.getOpportunitiesClosedWonBySalesRep();
