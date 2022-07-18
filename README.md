@@ -33,11 +33,11 @@
 
 It is very easy, you can call any of these **commands**:
 
-**NEW SALESREP** -> Add SALESREP to the CRM system with URL: http://localhost:8080/sales-rep  
+**NEW SALESREP** -> Add SALESREP to the CRM system with type POST and URL: http://localhost:8080/sales-rep  
 
 &emsp; Body example: ```{"name":"Pepa"}```
 
-**NEW LEAD** -> Add LEAD to the CRM system with URL: http://localhost:8080/leads 
+**NEW LEAD** -> Add LEAD to the CRM system with type POST and URL: http://localhost:8080/leads 
 
 &emsp; Body example: 
 ```
@@ -50,27 +50,27 @@ It is very easy, you can call any of these **commands**:
 }
 ```
 
-**SHOW SALESREP** ->  Display a list of all the SALESREP' id and name with URL: http://localhost:8080/sales-rep
+**SHOW SALESREP** ->  Display a list of all the SALESREP' id and name with type GET and URL: http://localhost:8080/sales-rep
 
-**SHOW LEADS** -> Display a list of all the LEADS' id and name with URL: http://localhost:8080/leads
+**SHOW LEADS** -> Display a list of all the LEADS' id and name with type GET and URL: http://localhost:8080/leads
 
-**SHOW CONTACTS** -> Display a list of all the CONTACTS' id and name with URL: http://localhost:8080/contacts
+**SHOW CONTACTS** -> Display a list of all the CONTACTS' id and name with type GET and URL: http://localhost:8080/contacts
 
-**SHOW OPPORTUNITIES** -> Display a list of all the OPPORTUNITIES' id and name of the decision maker with URL: http://localhost:8080/opportunities
+**SHOW OPPORTUNITIES** -> Display a list of all the OPPORTUNITIES' id and name of the decision maker with type GET and URL: http://localhost:8080/opportunities
 
-**SHOW ACCOUNTS** -> Display a list of all the ACCOUNTS id and name of the first contact with URL: http://localhost:8080/accounts
+**SHOW ACCOUNTS** -> Display a list of all the ACCOUNTS id and name of the first contact with type GET and URL: http://localhost:8080/accounts
 
-**LOOKUP SALESREP (ID)** -> Display the selected SALESREP's details with the indicated Id Number with URL: http://localhost:8080/sales-rep/{id}
+**LOOKUP SALESREP (ID)** -> Display the selected SALESREP's details with the indicated Id Number with type GET andURL: http://localhost:8080/sales-rep/{id}
 
-**LOOKUP LEAD (ID)** -> Display the selected LEAD's details with the indicated Id Number with URL: http://localhost:8080/leads/{id}
+**LOOKUP LEAD (ID)** -> Display the selected LEAD's details with the indicated Id Number with type GET and URL: http://localhost:8080/leads/{id}
 
-**LOOKUP ACCOUNT (ID)** -> Display the selected ACCOUNT's details with the indicated Id Number with URL: http://localhost:8080/accounts/{id}
+**LOOKUP ACCOUNT (ID)** -> Display the selected ACCOUNT's details with the indicated Id Number with type GET and URL: http://localhost:8080/accounts/{id}
 
-**LOOKUP OPPORTUNITY (ID)** -> Display the selected OPPORTUNITY's details with the indicated Id Number with URL: http://localhost:8080/opportunities/{id}
+**LOOKUP OPPORTUNITY (ID)** -> Display the selected OPPORTUNITY's details with the indicated Id Number with type GET and URL: http://localhost:8080/opportunities/{id}
 
-**LOOKUP CONTACT (ID)** -> Display the selected CONTACT's details with the indicated Id Number with URL: http://localhost:8080/contacts/{id}
+**LOOKUP CONTACT (ID)** -> Display the selected CONTACT's details with the indicated Id Number with type GET and URL: http://localhost:8080/contacts/{id}
 
-**CONVERT (ID)** -> Converts the selected LEAD in CONTACT, OPPORTUNITY and ACCOUNT and removes it from the system with URL: http://localhost:8080/convert/{id}
+**CONVERT (ID)** -> Converts the selected LEAD in CONTACT, OPPORTUNITY and ACCOUNT and removes it from the system with type POST and URL: http://localhost:8080/convert/{id}
 
 &emsp; As it was indicated before, you can associate this convertion to an existing account or you can create a new one. An example of the two bodies needed is shown in the following lines
 
@@ -97,72 +97,72 @@ It is very easy, you can call any of these **commands**:
 }
 ```
 
-**CLOSE LOST (ID)** -> Changes the selected ACCOUNT status to CLOSE-LOST with URL: http://localhost:8080/opportunities/{id}/close-lost
+**CLOSE LOST (ID)** -> Changes the selected ACCOUNT status to CLOSE-LOST with type PATCH and URL: http://localhost:8080/opportunities/{id}/close-lost
 
-**CLOSE WON (ID)** -> Changes the selected ACCOUNT status to CLOSE-WON with URL: http://localhost:8080/opportunities/{id}/close-won
+**CLOSE WON (ID)** -> Changes the selected ACCOUNT status to CLOSE-WON with type PATCH and URL: http://localhost:8080/opportunities/{id}/close-won
 
-**REPORT LEAD BY SALESREP** -> A count of Leads by SalesRep with URL: http://localhost:8080/sales-rep/{id}
+**REPORT LEAD BY SALESREP** -> A count of Leads by SalesRep with type GET and URL: http://localhost:8080/sales-rep/{id}
 
-**REPORT OPPORTUNITY BY SALESREP** -> A count of all Opportunities by SalesRep with URL: http://localhost:8080/opportunity-sales-rep
+**REPORT OPPORTUNITY BY SALESREP** -> A count of all Opportunities by SalesRep with type GET and URL: http://localhost:8080/opportunity-sales-rep
 
-**REPORT CLOSED-WON BY SALESREP** -> A count of all CLOSED_WON Opportunities by SalesRep with URL: http://localhost:8080/opportunity-sales-rep/closed-won
+**REPORT CLOSED-WON BY SALESREP** -> A count of all CLOSED_WON Opportunities by SalesRep with type GET and URL: http://localhost:8080/opportunity-sales-rep/closed-won
 
-**REPORT CLOSED-LOST BY SALESREP** -> A count of all CLOSED_LOST Opportunities by SalesRep with URL: http://localhost:8080/opportunity-sales-rep/closed-lost
+**REPORT CLOSED-LOST BY SALESREP** -> A count of all CLOSED_LOST Opportunities by SalesRep with type GET and URL: http://localhost:8080/opportunity-sales-rep/closed-lost
 
-**REPORT OPEN BY SALESREP** -> A count of all OPEN Opportunities by SalesRep with URL: http://localhost:8080/opportunity-sales-rep/open
+**REPORT OPEN BY SALESREP** -> A count of all OPEN Opportunities by SalesRep with type GET and URL: http://localhost:8080/opportunity-sales-rep/open
 
-**REPORT OPPORTUNITY BY THE PRODUCT** -> A count of all Opportunities by the product with URL: http://localhost:8080/opportunity-products
+**REPORT OPPORTUNITY BY THE PRODUCT** -> A count of all Opportunities by the product with type GET and URL: http://localhost:8080/opportunity-products
 
-**REPORT CLOSED-WON BY THE PRODUCT** -> A count of all CLOSED_WON Opportunities with URL: http://localhost:8080/opportunity-products/closed-won
+**REPORT CLOSED-WON BY THE PRODUCT** -> A count of all CLOSED_WON Opportunities with type GET and URL: http://localhost:8080/opportunity-products/closed-won
 
-**REPORT CLOSED-LOST THE PRODUCT** -> A count of all CLOSED_LOST Opportunities with URL: http://localhost:8080/opportunity-products/closed-lost
+**REPORT CLOSED-LOST THE PRODUCT** -> A count of all CLOSED_LOST Opportunities with type GET and URL: http://localhost:8080/opportunity-products/closed-lost
 
-**REPORT OPEN BY THE PRODUCT** -> A count of all OPEN Opportunities by the product with URL: http://localhost:8080/opportunity-products/open
+**REPORT OPEN BY THE PRODUCT** -> A count of all OPEN Opportunities by the product with type GET and URL: http://localhost:8080/opportunity-products/open
 
-**REPORT OPPORTUNITY BY COUNTRY** -> A count of all Opportunities by country with URL: http://localhost:8080/opportunities-country
+**REPORT OPPORTUNITY BY COUNTRY** -> A count of all Opportunities by country with type GET and URL: http://localhost:8080/opportunities-country
 
-**REPORT CLOSED-WON BY COUNTRY** -> A count of all CLOSED_WON Opportunities by country with URL: http://localhost:8080/opportunities-country/closed-won
+**REPORT CLOSED-WON BY COUNTRY** -> A count of all CLOSED_WON Opportunities by country with type GET and URL: http://localhost:8080/opportunities-country/closed-won
 
-**REPORT CLOSED-LOST BY COUNTRY** -> A count of all CLOSED_LOST Opportunities by country with URL: http://localhost:8080/opportunities-country/closed-lost
+**REPORT CLOSED-LOST BY COUNTRY** -> A count of all CLOSED_LOST Opportunities by country with type GET and URL: http://localhost:8080/opportunities-country/closed-lost
 
-**REPORT OPEN BY COUNTRY** -> A count of all OPEN Opportunities with URL: http://localhost:8080/opportunities-country/open
+**REPORT OPEN BY COUNTRY** -> A count of all OPEN Opportunities with type GET and URL: http://localhost:8080/opportunities-country/open
 
-**REPORT OPPORTUNITY BY CITY** -> A count of all Opportunities by the city with URL: http://localhost:8080/opportunities-city
+**REPORT OPPORTUNITY BY CITY** -> A count of all Opportunities by the city with type GET and URL: http://localhost:8080/opportunities-city
 
-**REPORT CLOSED-WON BY CITY** -> A count of all CLOSED_WON Opportunities by the city with URL: http://localhost:8080/opportunities-city/closed-won
+**REPORT CLOSED-WON BY CITY** -> A count of all CLOSED_WON Opportunities by the city with type GET and URL: http://localhost:8080/opportunities-city/closed-won
 
-**REPORT CLOSED-LOST BY CITY** -> A count of all CLOSED_LOST Opportunities by the city with URL: http://localhost:8080/opportunities-city/closed-lost
+**REPORT CLOSED-LOST BY CITY** -> A count of all CLOSED_LOST Opportunities by the city with type GET and URL: http://localhost:8080/opportunities-city/closed-lost
 
-**REPORT OPEN BY CITY** -> A count of all OPEN Opportunities by the city with URL: http://localhost:8080/opportunities-city/open
+**REPORT OPEN BY CITY** -> A count of all OPEN Opportunities by the city with type GET and URL: http://localhost:8080/opportunities-city/open
 
-**REPORT OPPORTUNITY BY INDUSTRY** -> A count of all Opportunities by industry with URL: http://localhost:8080/opportunities-industry
+**REPORT OPPORTUNITY BY INDUSTRY** -> A count of all Opportunities by industry with type GET and URL: http://localhost:8080/opportunities-industry
 
-**REPORT CLOSED-WON BY INDUSTRY** -> A count of all CLOSED_WON Opportunities by industry with URL: http://localhost:8080/opportunities-industry/closed-won
+**REPORT CLOSED-WON BY INDUSTRY** -> A count of all CLOSED_WON Opportunities by industry with type GET and URL: http://localhost:8080/opportunities-industry/closed-won
 
-**REPORT CLOSED-LOST BY INDUSTRY** -> A count of all CLOSED_LOST Opportunities by industry with URL: http://localhost:8080/opportunities-industry/closed-lost
+**REPORT CLOSED-LOST BY INDUSTRY** -> A count of all CLOSED_LOST Opportunities by industry with type GET and URL: http://localhost:8080/opportunities-industry/closed-lost
 
-**REPORT OPEN BY INDUSTRY** -> A count of all OPEN Opportunities by industry with URL: http://localhost:8080/opportunities-industry/open
+**REPORT OPEN BY INDUSTRY** -> A count of all OPEN Opportunities by industry with type GET and URL: http://localhost:8080/opportunities-industry/open
 
-**MEAN EMPLOYEECOUNT** -> The mean employeeCount with URL: http://localhost:8080/account-employee/avg
+**MEAN EMPLOYEECOUNT** -> The mean employeeCount with type GET and URL: http://localhost:8080/account-employee/avg
 
-**MEDIAN EMPLOYEECOUNT** -> The median employeeCount with URL: http://localhost:8080/account-employee/med
+**MEDIAN EMPLOYEECOUNT** -> The median employeeCount with type GET and URL: http://localhost:8080/account-employee/med
 
-**MAX EMPLOYEECOUNT** -> The max employeeCount with URL: http://localhost:8080/account-employee/max
+**MAX EMPLOYEECOUNT** -> The max employeeCount with type GET and URL: http://localhost:8080/account-employee/max
 
-**MIN EMPLOYEECOUNT** -> The min employeeCount with URL: http://localhost:8080/account-employee/min
+**MIN EMPLOYEECOUNT** -> The min employeeCount with type GET and URL: http://localhost:8080/account-employee/min
 
-**MEAN QUANTITY** -> The mean quantity of products order with URL: http://localhost:8080/opportunity-quantity/avg
+**MEAN QUANTITY** -> The mean quantity of products order with type GET and URL: http://localhost:8080/opportunity-quantity/avg
 
-**MEDIAN QUANTITY** -> The median quantity of products order with URL: http://localhost:8080/opportunity-quantity/med
+**MEDIAN QUANTITY** -> The median quantity of products order with type GET and URL: http://localhost:8080/opportunity-quantity/med
 
-**MAX QUANTITY** -> The max quantity of products order with URL: http://localhost:8080/opportunity-quantity/max
+**MAX QUANTITY** -> The max quantity of products order with type GET and URL: http://localhost:8080/opportunity-quantity/max
 
-**MIN QUANTITY** -> The min quantity of products order with URL: http://localhost:8080/opportunity-quantity/min
+**MIN QUANTITY** -> The min quantity of products order with type GET and URL: http://localhost:8080/opportunity-quantity/min
 
-**MEAN OPPS PER ACCOUNT** -> The mean number of Opportunities associated with an Account with URL: http://localhost:8080/opportunity-account/avg
+**MEAN OPPS PER ACCOUNT** -> The mean number of Opportunities associated with an Account with type GET and URL: http://localhost:8080/opportunity-account/avg
 
-**MEDIAN OPPS PER ACCOUNT** -> The median number of Opportunities associated with an Account with URL: http://localhost:8080/opportunity-account/med
+**MEDIAN OPPS PER ACCOUNT** -> The median number of Opportunities associated with an Account with type GET and URL: http://localhost:8080/opportunity-account/med
 
-**MAX OPPS PER ACCOUNT** -> The maximum number of Opportunities associated with an Account with URL: http://localhost:8080/opportunity-account/max
+**MAX OPPS PER ACCOUNT** -> The maximum number of Opportunities associated with an Account with type GET and URL: http://localhost:8080/opportunity-account/max
 
-**MIN OPPS PER ACCOUNT** -> The minimum number of Opportunities associated with an Account with URL: http://localhost:8080/opportunity-account/min
+**MIN OPPS PER ACCOUNT** -> The minimum number of Opportunities associated with an Account with type GET and URL: http://localhost:8080/opportunity-account/min
