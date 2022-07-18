@@ -16,9 +16,13 @@
  
  - Convert Leads into Opportunities (leads are converted into opportunities when they show interest in buying the product).
  
-  - Associate an Opportunity with an Account.
+ - Associate an Opportunity with an Account.
     
-  - Associate Contacts with an Opportunity.
+ - Associate Contacts with an Opportunity.
+
+## IMPORTANT
+To pass the tests you must not have any project up (neither the service you are testing nor the config-service).
+When building the services, the first one will be config-service and then eureka-service, the rest can be built in any order.
  
 ## How does the program work?
 
@@ -116,10 +120,10 @@ It is very easy, you can call any of these **commands**:
 
 **MIN QUANTITY** -> The min quantity of products order with URL: http://localhost:8080/opportunity-quantity/min
 
-**MEAN OPPS PER ACCOUNT** -> The mean number of Opportunities associated with an Account with URL: http://localhost:8080/
+**MEAN OPPS PER ACCOUNT** -> The mean number of Opportunities associated with an Account with URL: http://localhost:8080/opportunity-account/avg
 
-**MEDIAN OPPS PER ACCOUNT** -> The median number of Opportunities associated with an Account with URL: http://localhost:8080/
+**MEDIAN OPPS PER ACCOUNT** -> The median number of Opportunities associated with an Account with URL: http://localhost:8080/opportunity-account/med
 
-**MAX OPPS PER ACCOUNT** -> The maximum number of Opportunities associated with an Account with URL: http://localhost:8080/
+**MAX OPPS PER ACCOUNT** -> The maximum number of Opportunities associated with an Account with URL: http://localhost:8080/opportunity-account/max
 
-**MIN OPPS PER ACCOUNT** -> The minimum number of Opportunities associated with an Account with URL: http://localhost:8080/
+**MIN OPPS PER ACCOUNT** -> The minimum number of Opportunities associated with an Account with URL: http://localhost:8080/opportunity-account/min
