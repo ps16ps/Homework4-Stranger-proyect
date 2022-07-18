@@ -111,6 +111,30 @@ public class OpportunityControllerImpl implements OpportunityController {
         return opportunityRepository.findOpportunitiesOpenBySalesRep();
     }
 
+    @GetMapping("/opportunity-account/avg")
+    @ResponseStatus(HttpStatus.OK)
+    public double getAvgOppPerAccount() {
+        return opportunityRepository.findMeanOpportunitiesPerAccount();
+    }
+
+    @GetMapping("/opportunity-account/max")
+    @ResponseStatus(HttpStatus.OK)
+    public int getMaxOppPerAccount() {
+        return opportunityRepository.findMaxOpportunitiesPerAccount();
+    }
+
+    @GetMapping("/opportunity-account/min")
+    @ResponseStatus(HttpStatus.OK)
+    public int getMinOppPerAccount() {
+        return opportunityRepository.findMinOpportunitiesPerAccount();
+    }
+
+    @GetMapping("/opportunity-account/med")
+    @ResponseStatus(HttpStatus.OK)
+    public double getMedOppPerAccount(){
+        return opportunityService.getMedOppPerAccount();
+    }
+
     //Post Requests
     @PostMapping("/opportunities")
     @ResponseStatus(HttpStatus.CREATED)

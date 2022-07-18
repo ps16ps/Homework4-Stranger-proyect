@@ -58,4 +58,24 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
     //Count of all OPEN Opportunities by SalesRep
     @Query("SELECT o.salesRepId, COUNT(o.id) FROM Opportunity o WHERE o.status = 'OPEN' GROUP BY o.salesRepId")
     List<Object[]> findOpportunitiesOpenBySalesRep();
+
+    //The mean number of Opportunities associated with an Account
+    @Query(value = "SELECT AVG(a.countOpp) FROM (SELECT count(*) AS countOpp FROM opportunity GROUP BY " +
+            "account_id) AS a", nativeQuery = true)
+    double findMeanOpportunitiesPerAccount();
+
+    ////The median number of Opportunities associated with an Account
+    @Query( value = "SELECT a.countOpp FROM (SELECT count(*) AS countOpp FROM opportunity GROUP BY " +
+            "account_id) AS a ORDER BY a.countOpp", nativeQuery = true)
+    List<Integer> medOpportunitiesPerAccount_firstStep();
+
+    ////The maximum number of Opportunities associated with an Account
+    @Query(value = "SELECT MAX(a.countOpp) FROM (SELECT count(*) AS countOpp FROM opportunity GROUP BY " +
+            "account_id) AS a", nativeQuery = true)
+    int findMaxOpportunitiesPerAccount();
+    //
+    ////The minimum number of Opportunities associated with an Account
+    @Query(value = "SELECT MIN(a.countOpp) FROM (SELECT count(*) AS countOpp FROM opportunity GROUP BY " +
+            "account_id) AS a", nativeQuery = true)
+    int findMinOpportunitiesPerAccount();
 }

@@ -11,6 +11,8 @@ public interface OpportunityService {
 
     double getMedQuantity();
 
+    double getMedOppPerAccount();
+
     Opportunity createOpportunity(String product ,int quantity, Long decisionMakerId,
                                   Long accountId, Long salesRepId );
 

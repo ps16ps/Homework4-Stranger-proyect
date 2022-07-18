@@ -39,13 +39,15 @@ public interface OpportunityController {
 
     List<Object[]> getOpportunitiesOpenBySalesRep();
 
+    double getAvgOppPerAccount();
 
+    int getMaxOppPerAccount();
 
+    int getMinOppPerAccount();
+
+    double getMedOppPerAccount();
 
     Opportunity createOpportunity(OpportunityDTO opportunityDto);
 
     void updateStatus(Long id, StatusDTO statusDTO);
-
-
-
 }

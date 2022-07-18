@@ -42,6 +42,21 @@ public class OpportunityServiceImpl implements OpportunityService {
         return median;
     }
 
+    public double getMedOppPerAccount(){
+        List<Integer> medList = opportunityRepository.medOpportunitiesPerAccount_firstStep();
+        int size = medList.size();
+        int medIndex = size/2;
+        double median = 0;
+        if (size%2 != 0){
+            median = medList.get(medIndex);
+        } else {
+            double median1 = medList.get(medIndex-1);
+            double median2 = medList.get(medIndex);
+            median = (median1+median2)/2;
+        }
+        return median;
+    }
+
     public Opportunity createOpportunity(String product ,int quantity, Long decisionMakerId,
                                          Long accountId, Long salesRepId ) {
 

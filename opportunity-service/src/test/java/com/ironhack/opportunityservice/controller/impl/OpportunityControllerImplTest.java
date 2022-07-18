@@ -45,7 +45,7 @@ class OpportunityControllerImplTest {
         opportunity1 = new Opportunity(Product.BOX,10,1L,1L,1L);
         opportunity2 = new Opportunity(Product.FLATBED,20,1L,1L,3L);
         opportunity2.setStatus(CLOSED_WON);
-        opportunity3 = new Opportunity(Product.FLATBED,30,1L,1L,2L);
+        opportunity3 = new Opportunity(Product.FLATBED,30,1L,2L,2L);
         opportunity3.setStatus(Status.CLOSED_LOST);
 
         opportunityRepository.saveAll(List.of(opportunity1,opportunity2,opportunity3));
@@ -280,5 +280,57 @@ class OpportunityControllerImplTest {
         assertTrue(optionalOpportunity.isPresent());
         assertEquals(CLOSED_WON, optionalOpportunity.get().getStatus());
 
+    }
+
+    @Test
+    void getAvgOppPerAccount() throws Exception {
+        // Llamar con el GET a /opportunity-account/avg
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/opportunity-account/avg"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("1.5"));
+    }
+
+    @Test
+    void getMaxOppPerAccount() throws Exception {
+        // Llamar con el GET a /opportunity-account/max
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/opportunity-account/max"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("2"));
+    }
+
+    @Test
+    void getMinOppPerAccount() throws Exception {
+        // Llamar con el GET a /opportunity-account/min
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/opportunity-account/min"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("1"));
+    }
+
+    @Test
+    void getMedOppPerAccount() throws Exception {
+        // Llamar con el GET a /opportunity-account/med
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/opportunity-account/med"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("1.5"));
     }
 }

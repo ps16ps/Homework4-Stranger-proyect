@@ -944,4 +944,80 @@ class EdgeControllerImplTest {
         assertEquals(Status.CLOSED_WON, opportunity1.getStatus());
         Mockito.verify(mockOpportunityClient).updateStatus(opportunity1.getId(), new StatusDTO("CLOSED_WON"));
     }
+
+    @Test
+    void getAvgOppPerAccount() throws Exception {
+        Mockito.when(mockOpportunityClient.getAvgOppPerAccount())
+                .thenReturn(1.50);
+
+        // Llamar con el GET a /opportunity-account/avg
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/opportunity-account/avg"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
+
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("1.5"));
+
+        Mockito.verify(mockOpportunityClient).getAvgOppPerAccount();
+    }
+
+    @Test
+    void getMaxOppPerAccount() throws Exception {
+        Mockito.when(mockOpportunityClient.getMaxOppPerAccount())
+                .thenReturn(1);
+
+        // Llamar con el GET a /opportunity-account/max
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/opportunity-account/max"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
+
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("1"));
+
+        Mockito.verify(mockOpportunityClient).getMaxOppPerAccount();
+    }
+
+    @Test
+    void getMinOppPerAccount() throws Exception {
+        Mockito.when(mockOpportunityClient.getMinOppPerAccount())
+                .thenReturn(1);
+
+        // Llamar con el GET a /opportunity-account/min
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/opportunity-account/min"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
+
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("1"));
+
+        Mockito.verify(mockOpportunityClient).getMinOppPerAccount();
+    }
+
+    @Test
+    void getMedOppPerAccount() throws Exception {
+        Mockito.when(mockOpportunityClient.getMedOppPerAccount())
+                .thenReturn(1.5);
+
+        // Llamar con el GET a /opportunity-account/med
+        // Comprobamos que el status code de  respuesta sea OK
+        // Comprobamos que la respuesta esté en formato JSON
+        // Comprobamos que el resultado es el que toca
+        MvcResult mvcResult = mockMvc.perform(get("/opportunity-account/med"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn(); //Para cerrar la petición
+
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("1.5"));
+
+        Mockito.verify(mockOpportunityClient).getMedOppPerAccount();
+    }
 }

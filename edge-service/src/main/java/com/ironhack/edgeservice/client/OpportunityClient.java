@@ -4,6 +4,7 @@ import com.ironhack.edgeservice.controller.dto.OpportunityDTO;
 import com.ironhack.edgeservice.controller.dto.StatusDTO;
 import com.ironhack.edgeservice.model.Opportunity;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -52,6 +53,18 @@ public interface OpportunityClient {
 
     @GetMapping("/opportunity-sales-rep/open")
     List <Object[]> getOpportunitiesOpenBySalesRep();
+
+    @GetMapping("/opportunity-account/avg")
+    double getAvgOppPerAccount();
+
+    @GetMapping("/opportunity-account/max")
+    int getMaxOppPerAccount();
+
+    @GetMapping("/opportunity-account/min")
+    int getMinOppPerAccount();
+
+    @GetMapping("/opportunity-account/med")
+    double getMedOppPerAccount();
 
     @PostMapping("/opportunities")
     Opportunity createOpportunity(@RequestBody OpportunityDTO opportunityDto);

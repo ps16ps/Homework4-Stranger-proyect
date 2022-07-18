@@ -150,6 +150,30 @@ public class EdgeControllerImpl implements EdgeController {
         return opportunityClient.getMedQuantity();
     }
 
+    @GetMapping("/opportunity-account/avg")
+    @ResponseStatus(HttpStatus.OK)
+    public double getAvgOppPerAccount(){
+        return opportunityClient.getAvgOppPerAccount();
+    }
+
+    @GetMapping("/opportunity-account/max")
+    @ResponseStatus(HttpStatus.OK)
+    public int getMaxOppPerAccount(){
+        return opportunityClient.getMaxOppPerAccount();
+    }
+
+    @GetMapping("/opportunity-account/min")
+    @ResponseStatus(HttpStatus.OK)
+    public int getMinOppPerAccount(){
+        return opportunityClient.getMinOppPerAccount();
+    }
+
+    @GetMapping("/opportunity-account/med")
+    @ResponseStatus(HttpStatus.OK)
+    public double getMedOppPerAccount(){
+        return opportunityClient.getMedOppPerAccount();
+    }
+
     @GetMapping("/opportunity-products")
     @ResponseStatus(HttpStatus.OK)
     public List<Object[]> getAllOpportunitiesByProduct(){
