@@ -21,32 +21,46 @@
  - Associate Contacts with an Opportunity.
 
 ## IMPORTANT
-To pass the tests you must not have any project up (neither the service you are testing nor the config-service).
-When building the services, the first one will be config-service and then eureka-service, the rest can be built in any order.
- 
+- When building the services, the first one will be config-service and then eureka-service, the rest can be built in any order.
+
+- To pass the tests you must not have any project up (neither the service you are testing nor the config-service).
+
+- The first thing you need to create is a SalesRep, then you can create a Lead and convert it to get a Contact, an Opportunity and an Account.
+
+- When converting a Lead you can decide to associate this convertion with an existing Account or create a new Account. This will be detailed in the next section
+
 ## How does the program work?
 
 It is very easy, you can call any of these **commands**:
 
-**NEW LEAD** -> Add Lead to the CRM system with URL: http://localhost:8080/leads Body example: {
-"name": "Lia",
-"phoneNumber": "62656256",
-"email":"lia@gmail.com",
-"companyName": "aaaa",
-"salesRepId": 1
-}
+**NEW SALESREP** -> Add SALESREP to the CRM system with URL: http://localhost:8080/sales-rep  
 
-**NEW SALESREP** -> Add SalesRep to the CRM system with URL: http://localhost:8080/sales-rep  Body example: {"name":"Pepa"}
+&emsp; Body example: ```{"name":"Pepa"}```
+
+**NEW LEAD** -> Add LEAD to the CRM system with URL: http://localhost:8080/leads 
+
+&emsp; Body example: 
+```
+{
+ "name": "Lia",
+ "phoneNumber": "62656256",
+ "email":"lia@gmail.com",
+ "companyName": "aaaa",
+ "salesRepId": 1
+}
+```
+
+**SHOW SALESREP** ->  Display a list of all the SALESREP' id and name with URL: http://localhost:8080/sales-rep
 
 **SHOW LEADS** -> Display a list of all the LEADS' id and name with URL: http://localhost:8080/leads
-
-**SHOW SALESREP** ->  Display a list of all the SalesRep' id and name with URL: http://localhost:8080/sales-rep
 
 **SHOW CONTACTS** -> Display a list of all the CONTACTS' id and name with URL: http://localhost:8080/contacts
 
 **SHOW OPPORTUNITIES** -> Display a list of all the OPPORTUNITIES' id and name of the decision maker with URL: http://localhost:8080/opportunities
 
 **SHOW ACCOUNTS** -> Display a list of all the ACCOUNTS id and name of the first contact with URL: http://localhost:8080/accounts
+
+**LOOKUP SALESREP (ID)** -> Display the selected SALESREP's details with the indicated Id Number with URL: http://localhost:8080/sales-rep/{id}
 
 **LOOKUP LEAD (ID)** -> Display the selected LEAD's details with the indicated Id Number with URL: http://localhost:8080/leads/{id}
 
@@ -57,6 +71,31 @@ It is very easy, you can call any of these **commands**:
 **LOOKUP CONTACT (ID)** -> Display the selected CONTACT's details with the indicated Id Number with URL: http://localhost:8080/contacts/{id}
 
 **CONVERT (ID)** -> Converts the selected LEAD in CONTACT, OPPORTUNITY and ACCOUNT and removes it from the system with URL: http://localhost:8080/convert/{id}
+
+&emsp; As it was indicated before, you can associate this convertion to an existing account or you can create a new one. An example of the two bodies needed is shown in the following lines
+
+&emsp; Body example with existing account:
+
+```
+{
+ "product": "BOX",
+ "quantity": 2,
+ "accountId": 1
+}
+```
+
+&emsp; Body example with new account:
+
+```
+{
+ "product": "BOX",
+ "quantity": 2,
+ "industry": "MEDICAL",
+ "employeeCount":12,
+ "city":"Barcelona",
+ "country":"Spain"
+}
+```
 
 **CLOSE LOST (ID)** -> Changes the selected ACCOUNT status to CLOSE-LOST with URL: http://localhost:8080/opportunities/{id}/close-lost
 
